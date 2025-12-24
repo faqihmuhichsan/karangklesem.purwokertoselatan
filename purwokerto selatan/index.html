@@ -19,10 +19,27 @@
             padding: 0;
             margin: 0;
         }
+        /* Floating logo in top-left corner */
+        .map-logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            width: 48px;
+            height: 48px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            background: white;
+        }
+        .map-logo img { width: 100%; height: 100%; object-fit: cover; }
         </style>
-        <title></title>
+        <title>Peta Purwokerto Selatan — Kabupaten Banyumas</title>
     </head>
     <body>
+        <div class="map-logo" title="Kabupaten Banyumas">
+            <img src="../images/Lambang Banyumas Asli.png" alt="Kabupaten Banyumas">
+        </div>
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
@@ -253,47 +270,66 @@
         map.addLayer(layer_WILAYAHPURWOKERTOSELATAN_1);
         const url = {"Nominatim OSM": "https://nominatim.openstreetmap.org/search?format=geojson&addressdetails=1&",
         "France BAN": "https://api-adresse.data.gouv.fr/search/?"}
+        
+        // Define Purwokerto Selatan map bounds for search filtering (expanded bounds)
+        var mapBounds = L.latLngBounds(
+            L.latLng(-7.5, 110.0),    // Southwest (lebih luas)
+            L.latLng(-7.3, 110.4)     // Northeast (lebih luas)
+        );
+        
         var photonControl = L.control.photon({
             url: url["Nominatim OSM"],
             feedbackLabel: '',
             position: 'topleft',
             includePosition: true,
             initial: true,
-            // resultsHandler: myHandler,
+            resultsHandler: function(results) {
+                // Filter results to only show those within map bounds
+                var filteredResults = [];
+                for (var i = 0; i < results.length; i++) {
+                    var result = results[i];
+                    if (result.geometry && result.geometry.type === 'Point') {
+                        var coords = L.GeoJSON.coordsToLatLng(result.geometry.coordinates);
+                        if (mapBounds.contains(coords)) {
+                            filteredResults.push(result);
+                        }
+                    }
+                }
+                // Jika tidak ada hasil, return semuanya (fallback)
+                return filteredResults.length > 0 ? filteredResults : results.slice(0, 5);
+            }
         }).addTo(map);
         photonControl._container.childNodes[0].style.borderRadius="10px"
-        // Create a variable to store the geoJSON data
-        var x = null;
-        // Create a variable to store the marker
-        var marker = null;
-        // Add an event listener to the Photon control to create a marker from the returned geoJSON data
-        var z = null;
-        photonControl.on('selected', function(e) {
-            console.log(photonControl.search.resultsContainer);
-            if (x != null) {
-                map.removeLayer(obj3.marker);
-                map.removeLayer(x);
+        
+        // Simple search zoom - Purwokerto Selatan
+        var searchMarker = null;
+        
+        // Bounds Purwokerto Selatan (lat: -7.5 to -7.3, lon: 110.0 to 110.4)
+        var mapBounds = L.latLngBounds(
+            L.latLng(-7.5, 110.0),    // Southwest
+            L.latLng(-7.3, 110.4)     // Northeast
+        );
+        
+        photonControl.on('selected', function(data) {
+            if (data.latlng) {
+                // Validasi apakah dalam bounds
+                if (!mapBounds.contains(data.latlng)) {
+                    alert('⚠️ Hasil pencarian diluar area Purwokerto Selatan.\n\nCoba cari dengan nama yang lebih spesifik atau lokasi lokal di area.');
+                    return;
+                }
+                
+                if (searchMarker) { try { map.removeLayer(searchMarker); } catch(e) {} }
+                var label = data.choice.properties.label || 'Lokasi';
+                searchMarker = L.marker(data.latlng).bindPopup(label).addTo(map).openPopup();
+                map.flyTo(data.latlng, 17);
             }
-            obj2.gcd = e.choice;
-            x = L.geoJSON(obj2.gcd).addTo(map);
-            var label = typeof obj2.gcd.properties.label === 'undefined' ? obj2.gcd.properties.display_name : obj2.gcd.properties.label;
-            obj3.marker = L.marker(x.getLayers()[0].getLatLng()).bindPopup(label).addTo(map);
-            map.setView(x.getLayers()[0].getLatLng(), 17);
-            z = typeof e.choice.properties.label === 'undefined'? e.choice.properties.display_name : e.choice.properties.label;
-            console.log(e);
-            e.target.input.value = z;
         });
-        var search = document.getElementsByClassName("leaflet-photon leaflet-control")[0];
-        search.classList.add("leaflet-control-search")
-        search.style.display = "flex";
-        search.style.backgroundColor="rgba(255,255,255,0.5)" 
-
-        // Create the new button element
         var button = document.createElement("div");
         button.id = "gcd-button-control";
         button.className = "gcd-gl-btn fa fa-search search-button";
 
         // Insert the button at the beginning of the search control
+        var search = document.getElementsByClassName("leaflet-photon leaflet-control")[0];
         search.insertBefore(button, search.firstChild);
         last = search.lastChild;
         last.style.display = "none";

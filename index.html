@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Geospasial Purwokerto Selatan</title>
+  <title>Peta Purwokerto Selatan</title>
+  <link rel="icon" href="images/Lambang Banyumas Asli.png" type="image/png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -162,16 +163,16 @@
       <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <div class="flex items-center space-x-3">
-            <img src="images/2.UAP Square Indonesian.png" alt="Portal Logo" class="w-10 h-10 object-cover rounded-full">
+            <img src="images/Lambang Banyumas Asli.png" alt="Logo Banyumas" class="w-10 h-10 object-cover rounded-full">
             <div>
-              <h1 class="text-xl font-bold sr-only">Portal Geospasial Purwokerto Selatan</h1>
-              <p class="text-xs text-white/80">Universitas Amikom Purwokerto</p>
+              <h1 class="text-xl font-bold sr-only">Peta Kecamatan</h1>
+              <p class="text-xs text-white/80">Peta Kecamatan Purwokerto Selatan</p>
             </div>
           </div>
           <div class="hidden md:flex space-x-8">
             <a href="#" class="nav-link active px-3 py-2 text-sm font-medium" data-page="home">Beranda</a>
-            <a href="#" class="nav-link px-3 py-2 text-sm font-medium" data-page="karangklesem">Peta Karangklesem</a>
             <a href="#" class="nav-link px-3 py-2 text-sm font-medium" data-page="purwokerto">Peta Purwokerto Selatan</a>
+            <a href="#" class="nav-link px-3 py-2 text-sm font-medium" data-page="karangklesem">Peta Karangklesem</a>
             <a href="#" class="nav-link px-3 py-2 text-sm font-medium" data-page="about">Tentang</a>
           </div>
           <button id="mobile-menu-btn" class="md:hidden p-2">
@@ -182,8 +183,8 @@
         </div>
         <div id="mobile-menu" class="hidden md:hidden pb-4">
           <a href="#" class="block px-3 py-2 text-sm font-medium hover:bg-white/10 rounded" data-page="home">Beranda</a>
-          <a href="#" class="block px-3 py-2 text-sm font-medium hover:bg-white/10 rounded" data-page="karangklesem">Peta Karangklesem</a>
           <a href="#" class="block px-3 py-2 text-sm font-medium hover:bg-white/10 rounded" data-page="purwokerto">Peta Purwokerto Selatan</a>
+          <a href="#" class="block px-3 py-2 text-sm font-medium hover:bg-white/10 rounded" data-page="karangklesem">Peta Karangklesem</a>
           <a href="#" class="block px-3 py-2 text-sm font-medium hover:bg-white/10 rounded" data-page="about">Tentang</a>
         </div>
       </nav>
@@ -195,8 +196,8 @@
       <div id="page-home" class="page-content">
         <section class="gradient-bg text-white py-20">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-5xl font-bold mb-6 animate-fade-in">Selamat Datang di Portal Geospasial</h2>
-            <p class="text-xl text-white/90 max-w-3xl mx-auto animate-slide-left">Platform informasi geografis untuk wilayah Purwokerto Selatan dan wilayah Karangklesem dengan data yang mudah diakses</p>
+            <h2 class="text-5xl font-bold mb-6 animate-fade-in">Selamat Datang di Peta Purwokerto Selatan</h2>
+            <!-- <p class="text-xl text-white/90 max-w-3xl mx-auto animate-slide-left">Platform informasi geografis untuk wilayah Purwokerto Selatan dan wilayah Karangklesem dengan data yang mudah diakses</p> -->
           </div>
         </section>
 
@@ -204,35 +205,8 @@
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">Jelajahi Peta Wilayah</h3> -->
             <div class="grid md:grid-cols-2 gap-8">
-              
-              <!-- Card Karangklesem dengan Preview -->
-              <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover cursor-pointer" data-navigate="karangklesem">
-                <div class="map-preview">
-                  <div class="absolute inset-0 flex items-center justify-center">
-                    <svg class="w-32 h-32 text-blue-500 map-icon-large" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                      <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
-                    </svg>
-                  </div>
-                  <div class="absolute inset-0" style="background-image: linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
-                  
-                  <div class="map-overlay">
-                    <div class="text-white text-center">
-                      <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                      </svg>
-                      <p class="font-semibold">Klik untuk Lihat Peta</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="p-6">
-                  <h4 class="text-2xl font-bold mb-3 text-gray-800">Peta Karangklesem</h4>
-                  <p class="text-gray-600 mb-4">Eksplorasi informasi geografis lengkap wilayah Karangklesem dengan berbagai layer data spasial</p>
-                  <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Lihat Peta Selengkapnya →</button>
-                </div>
-              </div>
 
-              <!-- Card Purwokerto Selatan dengan Preview -->
+              <!-- Card Purwokerto Selatan dengan Preview (kecamatan) -->
               <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover cursor-pointer" data-navigate="purwokerto">
                 <div class="map-preview">
                   <div class="absolute inset-0 flex items-center justify-center">
@@ -255,8 +229,35 @@
                 </div>
                 <div class="p-6">
                   <h4 class="text-2xl font-bold mb-3 text-gray-800">Peta Purwokerto Selatan</h4>
-                  <p class="text-gray-600 mb-4">Akses data geografis dan peta interaktif wilayah Purwokerto Selatan secara detail</p>
+                  <!-- <p class="text-gray-600 mb-4">Akses data geografis dan peta interaktif wilayah Purwokerto Selatan secara detail</p> -->
                   <button class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition">Lihat Peta Selengkapnya →</button>
+                </div>
+              </div>
+
+              <!-- Card Karangklesem dengan Preview (desa) -->
+              <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover cursor-pointer" data-navigate="karangklesem">
+                <div class="map-preview">
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <svg class="w-32 h-32 text-blue-500 map-icon-large" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                    </svg>
+                  </div>
+                  <div class="absolute inset-0" style="background-image: linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
+                  
+                  <div class="map-overlay">
+                    <div class="text-white text-center">
+                      <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                      </svg>
+                      <p class="font-semibold">Klik untuk Lihat Peta</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-6">
+                  <h4 class="text-2xl font-bold mb-3 text-gray-800">Peta Karangklesem</h4>
+                  <!-- <p class="text-gray-600 mb-4">Eksplorasi informasi geografis lengkap wilayah Karangklesem dengan berbagai layer data spasial</p> -->
+                  <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Lihat Peta Selengkapnya →</button>
                 </div>
               </div>
 
@@ -300,14 +301,14 @@
         </section> -->
       </div>
 
-      <!-- Peta Karangklesem Page - FULLSCREEN -->
-      <div id="page-karangklesem" class="page-content hidden h-full">
-        <iframe src="karangklesem/index.html" class="map-iframe w-full h-full" title="Peta Karangklesem WebQGIS" allow="geolocation" loading="eager"></iframe>
-      </div>
-
       <!-- Peta Purwokerto Selatan Page - FULLSCREEN -->
       <div id="page-purwokerto" class="page-content hidden h-full">
         <iframe src="purwokerto selatan/index.html" class="map-iframe w-full h-full" title="Peta Purwokerto Selatan WebQGIS" allow="geolocation" loading="eager"></iframe>
+      </div>
+
+      <!-- Peta Karangklesem Page - FULLSCREEN -->
+      <div id="page-karangklesem" class="page-content hidden h-full">
+        <iframe src="karangklesem/index.html" class="map-iframe w-full h-full" title="Peta Karangklesem WebQGIS" allow="geolocation" loading="eager"></iframe>
       </div>
 
       <!-- About Page -->
@@ -320,13 +321,13 @@
                 <div class="w-32 h-32 rounded-full mx-auto mb-6 overflow-hidden">
                   <img src="images/profile.jpg" alt="Foto Saya" class="w-full h-full object-cover">
                 </div>
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Tentang Portal</h2>
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Tentang</h2>
                 <p class="text-xl text-gray-600">Hai 🙋 Saya Faqih Muhammad Ichsan</p>
               </div>
               <div class="space-y-6 text-gray-700">
                 <div class="border-l-4 border-blue-500 pl-4">
-                  <h3 class="text-xl font-semibold mb-2">Portal Geospasial Purwokerto Selatan</h3>
-                  <p>Website ini merupakan Sistem Informasi Geografis (WebGIS) Desa Karangklesem yang dibangun sebagai pemenuhan Tugas Mata Kuliah GIS tentang pemetaan digital.
+                  <!-- <h3 class="text-xl font-semibold mb-2">Peta Purwokerto Selatan</h3> -->
+                  <!-- <p>Website ini merupakan Sistem Informasi Geografis (WebGIS) Desa Karangklesem yang dibangun sebagai pemenuhan Tugas Mata Kuliah GIS tentang pemetaan digital.
 
 Proyek ini mendemonstrasikan alur kerja pengolahan data spasial mulai dari digitasi peta, manajemen database, hingga visualisasi web.
 
@@ -338,12 +339,12 @@ Leaflet.js: Library JavaScript untuk menampilkan peta interaktif di web.
 
 GeoJSON: Format pertukaran data spasial.
 
-VS Code: Editor pengembangan antarmuka web.</p>
+VS Code: Editor pengembangan antarmuka web.</p> -->
                 </div>
-                <div class="border-l-4 border-purple-500 pl-4">
+                <!-- <div class="border-l-4 border-purple-500 pl-4">
                   <h3 class="text-xl font-semibold mb-2">Dosen Pengampu</h3>
                   <p>Bapak Abdul Aziz, M.Kom.</p>
-                </div>
+                </div> -->
                 <div class="border-l-4 border-green-500 pl-4">
                   <h3 class="text-xl font-semibold mb-2">Universitas Amikom Purwokerto</h3>
                   <p>Fakultas : Ilmu Komputer.</p>
@@ -360,7 +361,7 @@ VS Code: Editor pengembangan antarmuka web.</p>
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <p class="text-sm">© 2025 Portal Geospasial Purwokerto. Dibuat dengan WebQGIS.</p>
+        <p class="text-sm">© Copyright 2025</p>
         <p class="text-xs text-gray-400 mt-2">Sistem Informasi Geografis</p>
       </div>
     </footer>

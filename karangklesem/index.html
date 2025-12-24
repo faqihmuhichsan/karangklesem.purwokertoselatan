@@ -48,22 +48,20 @@
         <script src="data/RUMAHSENDIRI_5.js"></script>
         <script src="data/Sesarehan_6.js"></script>
         <script src="data/BALAIDESA_7.js"></script>
-        <script src="data/desapwt_8.js"></script>
-        <script src="data/WILAYAHRW_9.js"></script>
-        <script src="data/WILAYAHRTRW_10.js"></script>
-        <script src="data/WILAYAHKARANGKLESEM_11.js"></script>
+        <script src="data/PointWilayahKarangklesem_8.js"></script>
+        <script src="data/sungai_9.js"></script>
+        <script src="data/desapwt_10.js"></script>
+        <script src="data/WILAYAHRTRW_11.js"></script>
+        <script src="data/WILAYAHRW_12.js"></script>
+        <script src="data/WILAYAHKARANGKLESEMKU_13.js"></script>
         <script>
         var highlightLayer;
         function highlightFeature(e) {
             highlightLayer = e.target;
             highlightLayer.openPopup();
         }
-        var labels = [];
-        var totalMarkers = 0;
-        // While true, zoom event handlers should ignore the automatic fitBounds zoom
-        var suppressAutoZoom = true;
         var map = L.map('map', {
-            zoomControl:false, maxZoom:28, minZoom:10
+            zoomControl:false, maxZoom:28, minZoom:1
         })
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
@@ -145,29 +143,22 @@
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
             if (bounds_group.getLayers().length) {
-                try {
-                    map.fitBounds(bounds_group.getBounds(), {
-                        padding: [50, 50],
-                        maxZoom: 14
-                    });
-                    // Ensure Leaflet recalculates size and renders tiles
-                    setTimeout(function() { map.invalidateSize(false); }, 250);
-                } catch (err) {
-                    console.error('setBounds error:', err);
-                }
+                map.fitBounds(bounds_group.getBounds());
             }
         }
-        map.createPane('pane_GoogleSatellite_0');
-        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
-        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-            pane: 'pane_GoogleSatellite_0',
+        map.createPane('pane_OSMStandard_0');
+        map.getPane('pane_OSMStandard_0').style.zIndex = 400;
+        var layer_OSMStandard_0 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_0',
             opacity: 1.0,
-            attribution: '',
-            minZoom: 10,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
             maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
         });
-        layer_GoogleSatellite_0;
-        map.addLayer(layer_GoogleSatellite_0);
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
         function pop_gang_1(feature, layer) {
             layer.on({
                 mouseout: function(e) {
@@ -219,7 +210,6 @@
             style: style_gang_1_0,
         });
         bounds_group.addLayer(layer_gang_1);
-        map.addLayer(layer_gang_1);
         function pop_jalandesa_2(feature, layer) {
             layer.on({
                 mouseout: function(e) {
@@ -284,7 +274,6 @@
             styles: [style_jalandesa_2_0,style_jalandesa_2_1,]
         });
         bounds_group.addLayer(layer_jalandesa_2);
-        map.addLayer(layer_jalandesa_2);
         function pop_jalannasional_3(feature, layer) {
             layer.on({
                 mouseout: function(e) {
@@ -400,7 +389,6 @@
             },
         });
         bounds_group.addLayer(layer_PointDsKarangklesem_4);
-        map.addLayer(layer_PointDsKarangklesem_4);
         function pop_RUMAHSENDIRI_5(feature, layer) {
             layer.on({
                 mouseout: function(e) {
@@ -433,7 +421,7 @@
         rotationOrigin: 'center center',
         icon: L.icon({
             iconUrl: 'markers/RUMAHSENDIRI_5.svg',
-            iconSize: [26.599999999999998, 26.599999999999998]
+            iconSize: [19.0, 19.0]
         }),
                 interactive: true,
             }
@@ -477,7 +465,8 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['NAMA'] !== null ? autolinker.link(String(feature.properties['NAMA']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">NAMA</th>\
+                        <td>' + (feature.properties['NAMA'] !== null ? autolinker.link(String(feature.properties['NAMA']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -494,7 +483,7 @@
         rotationOrigin: 'center center',
         icon: L.icon({
             iconUrl: 'markers/Sesarehan_6.svg',
-            iconSize: [26.599999999999998, 26.599999999999998]
+            iconSize: [19.0, 19.0]
         }),
                 interactive: true,
             }
@@ -555,7 +544,7 @@
         rotationOrigin: 'center center',
         icon: L.icon({
             iconUrl: 'markers/BALAIDESA_7.svg',
-            iconSize: [26.599999999999998, 26.599999999999998]
+            iconSize: [19.0, 19.0]
         }),
                 interactive: true,
             }
@@ -580,7 +569,113 @@
         });
         bounds_group.addLayer(layer_BALAIDESA_7);
         map.addLayer(layer_BALAIDESA_7);
-        function pop_desapwt_8(feature, layer) {
+        function pop_PointWilayahKarangklesem_8(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nama'] !== null ? autolinker.link(String(feature.properties['nama']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PointWilayahKarangklesem_8_0() {
+            return {
+                pane: 'pane_PointWilayahKarangklesem_8',
+                radius: 4.8,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PointWilayahKarangklesem_8');
+        map.getPane('pane_PointWilayahKarangklesem_8').style.zIndex = 408;
+        map.getPane('pane_PointWilayahKarangklesem_8').style['mix-blend-mode'] = 'normal';
+        var layer_PointWilayahKarangklesem_8 = new L.geoJson(json_PointWilayahKarangklesem_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PointWilayahKarangklesem_8',
+            layerName: 'layer_PointWilayahKarangklesem_8',
+            pane: 'pane_PointWilayahKarangklesem_8',
+            onEachFeature: pop_PointWilayahKarangklesem_8,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_PointWilayahKarangklesem_8_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_PointWilayahKarangklesem_8);
+        map.addLayer(layer_PointWilayahKarangklesem_8);
+        function pop_sungai_9(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nama'] !== null ? autolinker.link(String(feature.properties['nama']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_sungai_9_0() {
+            return {
+                pane: 'pane_sungai_9',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_sungai_9');
+        map.getPane('pane_sungai_9').style.zIndex = 409;
+        map.getPane('pane_sungai_9').style['mix-blend-mode'] = 'normal';
+        var layer_sungai_9 = new L.geoJson(json_sungai_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_sungai_9',
+            layerName: 'layer_sungai_9',
+            pane: 'pane_sungai_9',
+            onEachFeature: pop_sungai_9,
+            style: style_sungai_9_0,
+        });
+        bounds_group.addLayer(layer_sungai_9);
+        map.addLayer(layer_sungai_9);
+        function pop_desapwt_10(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     if (typeof layer.closePopup == 'function') {
@@ -737,9 +832,9 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_desapwt_8_0() {
+        function style_desapwt_10_0() {
             return {
-                pane: 'pane_desapwt_8',
+                pane: 'pane_desapwt_10',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -752,21 +847,20 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_desapwt_8');
-        map.getPane('pane_desapwt_8').style.zIndex = 408;
-        map.getPane('pane_desapwt_8').style['mix-blend-mode'] = 'normal';
-        var layer_desapwt_8 = new L.geoJson(json_desapwt_8, {
+        map.createPane('pane_desapwt_10');
+        map.getPane('pane_desapwt_10').style.zIndex = 410;
+        map.getPane('pane_desapwt_10').style['mix-blend-mode'] = 'normal';
+        var layer_desapwt_10 = new L.geoJson(json_desapwt_10, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_desapwt_8',
-            layerName: 'layer_desapwt_8',
-            pane: 'pane_desapwt_8',
-            onEachFeature: pop_desapwt_8,
-            style: style_desapwt_8_0,
+            dataVar: 'json_desapwt_10',
+            layerName: 'layer_desapwt_10',
+            pane: 'pane_desapwt_10',
+            onEachFeature: pop_desapwt_10,
+            style: style_desapwt_10_0,
         });
-        bounds_group.addLayer(layer_desapwt_8);
-        map.addLayer(layer_desapwt_8);
-        function pop_WILAYAHRW_9(feature, layer) {
+        bounds_group.addLayer(layer_desapwt_10);
+        function pop_WILAYAHRTRW_11(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     if (typeof layer.closePopup == 'function') {
@@ -791,33 +885,939 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_WILAYAHRW_9_0() {
-            return {
-                pane: 'pane_WILAYAHRW_9',
+        function style_WILAYAHRTRW_11_0(feature) {
+            switch(String(feature.properties['NAMA'])) {
+                case 'RT  5 RW 10':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
                 opacity: 1,
-                color: 'rgba(77,175,74,1.0)',
-                dashArray: '16.0,8.0,4.0,8.0',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 4.0,
-                fillOpacity: 0,
-                interactive: false,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(203,169,107,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 1':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,131,205,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 10':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(130,208,120,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 11':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(71,192,208,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 12':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(67,226,229,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 13':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(101,137,238,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 2':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(107,162,224,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 3':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(204,103,53,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 4':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(117,187,206,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 5':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(156,201,104,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 6':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(154,202,23,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 7':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(98,209,96,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 8':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(216,17,37,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 1 RW 9':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(25,104,239,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 2 RW 1':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(123,181,225,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 2 RW 10':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,55,101,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 2 RW 12':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(203,13,111,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 2 RW 13':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(203,182,63,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 2 RW 2':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,103,123,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 2 RW 3':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,50,179,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 2 RW 4':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(191,236,112,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 2 RW 5':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,29,150,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 2 RW 6':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(200,224,82,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 2 RW 7':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(124,213,206,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 2 RW 8':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(170,40,209,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 2 RW 9':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(111,214,173,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 3 RW 1':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(236,90,148,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 3 RW 10':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(220,91,222,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 3 RW 12':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(164,219,122,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 3 RW 13':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(72,230,135,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 3 RW 2':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(93,226,186,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 3 RW 3':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(207,119,107,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 3 RW 4':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(236,40,40,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 3 RW 5':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,200,41,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 3 RW 6':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(71,216,189,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 3 RW 7':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(98,29,226,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 3 RW 8':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(226,130,19,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 3 RW 9':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,160,32,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 4 RW  5':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,98,213,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 4 RW 10':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(105,110,214,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 4 RW 12':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(180,82,229,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 4 RW 3':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(14,228,121,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 4 RW 6':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(25,159,221,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 4 RW 7':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(122,48,206,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 4 RW 8':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(22,54,212,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 5 RW 12':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(77,69,230,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 5 RW 3':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(22,233,40,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 5 RW 5':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(181,34,204,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 5 RW 7':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,69,23,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 6 RW 3':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(116,202,92,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 6 RW 5':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(139,223,97,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 6 RW 6':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(95,203,127,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 6 RW 7':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(192,200,31,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 7 RW 3':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(114,74,233,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 7 RW 5':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(169,105,218,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 8 RW 3':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(56,24,236,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RT 8 RW 7':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(76,235,105,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,147,100,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Perum. Sub Inti':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(151,229,105,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Perum. Mulawarman':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(218,203,86,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SAWAH RW4':
+                    return {
+                pane: 'pane_WILAYAHRTRW_11',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(111,240,79,1.0)',
+                interactive: true,
+            }
+                    break;
             }
         }
-        map.createPane('pane_WILAYAHRW_9');
-        map.getPane('pane_WILAYAHRW_9').style.zIndex = 409;
-        map.getPane('pane_WILAYAHRW_9').style['mix-blend-mode'] = 'lighten';
-        var layer_WILAYAHRW_9 = new L.geoJson(json_WILAYAHRW_9, {
+        map.createPane('pane_WILAYAHRTRW_11');
+        map.getPane('pane_WILAYAHRTRW_11').style.zIndex = 411;
+        map.getPane('pane_WILAYAHRTRW_11').style['mix-blend-mode'] = 'normal';
+        var layer_WILAYAHRTRW_11 = new L.geoJson(json_WILAYAHRTRW_11, {
             attribution: '',
-            interactive: false,
-            dataVar: 'json_WILAYAHRW_9',
-            layerName: 'layer_WILAYAHRW_9',
-            pane: 'pane_WILAYAHRW_9',
-            onEachFeature: pop_WILAYAHRW_9,
-            style: style_WILAYAHRW_9_0,
+            interactive: true,
+            dataVar: 'json_WILAYAHRTRW_11',
+            layerName: 'layer_WILAYAHRTRW_11',
+            pane: 'pane_WILAYAHRTRW_11',
+            onEachFeature: pop_WILAYAHRTRW_11,
+            style: style_WILAYAHRTRW_11_0,
         });
-        // layer_WILAYAHRW_9 intentionally NOT added to bounds_group so it stays hidden by default
-        function pop_WILAYAHRTRW_10(feature, layer) {
+        bounds_group.addLayer(layer_WILAYAHRTRW_11);
+        function pop_WILAYAHRW_12(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     if (typeof layer.closePopup == 'function') {
@@ -842,33 +1842,264 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_WILAYAHRTRW_10_0() {
-            return {
-                pane: 'pane_WILAYAHRTRW_10',
+        function style_WILAYAHRW_12_0(feature) {
+            switch(String(feature.properties['NAMA'])) {
+                case 'PERUM GS BUKIT NIRWANA':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
                 opacity: 1,
-                color: 'rgba(116,220,203,1.0)',
-                dashArray: '4.0,8.0',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 4.0,
-                fillOpacity: 0,
-                interactive: false,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(20,212,30,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'PERUM MULAWARMAN':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,27,72,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 01':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,159,65,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 02':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(17,35,239,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 03':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,114,93,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 04':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(56,228,191,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 05':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(111,75,203,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 06':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(210,200,86,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 07':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(107,196,214,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 08':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(154,209,27,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 09':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(154,23,219,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 10':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(215,78,210,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 11':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(203,41,135,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 12':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(75,215,133,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RW 13':
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(82,143,213,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_WILAYAHRW_12',
+                opacity: 1,
+                color: 'rgba(247,225,55,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,203,111,1.0)',
+                interactive: true,
+            }
+                    break;
             }
         }
-        map.createPane('pane_WILAYAHRTRW_10');
-        map.getPane('pane_WILAYAHRTRW_10').style.zIndex = 410;
-        map.getPane('pane_WILAYAHRTRW_10').style['mix-blend-mode'] = 'normal';
-        var layer_WILAYAHRTRW_10 = new L.geoJson(json_WILAYAHRTRW_10, {
+        map.createPane('pane_WILAYAHRW_12');
+        map.getPane('pane_WILAYAHRW_12').style.zIndex = 412;
+        map.getPane('pane_WILAYAHRW_12').style['mix-blend-mode'] = 'normal';
+        var layer_WILAYAHRW_12 = new L.geoJson(json_WILAYAHRW_12, {
             attribution: '',
-            interactive: false,
-            dataVar: 'json_WILAYAHRTRW_10',
-            layerName: 'layer_WILAYAHRTRW_10',
-            pane: 'pane_WILAYAHRTRW_10',
-            onEachFeature: pop_WILAYAHRTRW_10,
-            style: style_WILAYAHRTRW_10_0,
+            interactive: true,
+            dataVar: 'json_WILAYAHRW_12',
+            layerName: 'layer_WILAYAHRW_12',
+            pane: 'pane_WILAYAHRW_12',
+            onEachFeature: pop_WILAYAHRW_12,
+            style: style_WILAYAHRW_12_0,
         });
-        bounds_group.addLayer(layer_WILAYAHRTRW_10);
-        function pop_WILAYAHKARANGKLESEM_11(feature, layer) {
+        bounds_group.addLayer(layer_WILAYAHRW_12);
+        function pop_WILAYAHKARANGKLESEMKU_13(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     if (typeof layer.closePopup == 'function') {
@@ -883,46 +2114,10 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['GID_4'] !== null ? autolinker.link(String(feature.properties['GID_4']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['NAMA'] !== null ? autolinker.link(String(feature.properties['NAMA']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['GID_0'] !== null ? autolinker.link(String(feature.properties['GID_0']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['COUNTRY'] !== null ? autolinker.link(String(feature.properties['COUNTRY']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['GID_1'] !== null ? autolinker.link(String(feature.properties['GID_1']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['NAME_1'] !== null ? autolinker.link(String(feature.properties['NAME_1']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['GID_2'] !== null ? autolinker.link(String(feature.properties['GID_2']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['NAME_2'] !== null ? autolinker.link(String(feature.properties['NAME_2']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['GID_3'] !== null ? autolinker.link(String(feature.properties['GID_3']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['NAME_3'] !== null ? autolinker.link(String(feature.properties['NAME_3']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['NAME_4'] !== null ? autolinker.link(String(feature.properties['NAME_4']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['VARNAME_4'] !== null ? autolinker.link(String(feature.properties['VARNAME_4']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['TYPE_4'] !== null ? autolinker.link(String(feature.properties['TYPE_4']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['ENGTYPE_4'] !== null ? autolinker.link(String(feature.properties['ENGTYPE_4']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['CC_4'] !== null ? autolinker.link(String(feature.properties['CC_4']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Cari_Data'] !== null ? autolinker.link(String(feature.properties['Cari_Data']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -932,12 +2127,12 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_WILAYAHKARANGKLESEM_11_0() {
+        function style_WILAYAHKARANGKLESEMKU_13_0() {
             return {
-                pane: 'pane_WILAYAHKARANGKLESEM_11',
+                pane: 'pane_WILAYAHKARANGKLESEMKU_13',
                 opacity: 1,
-                color: 'rgba(144,255,0,1.0)',
-                dashArray: '16.0,8.0,4.0,8.0,4.0,8.0',
+                color: 'rgba(228,26,28,1.0)',
+                dashArray: '16.0,8.0',
                 lineCap: 'square',
                 lineJoin: 'bevel',
                 weight: 4.0,
@@ -945,34 +2140,34 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_WILAYAHKARANGKLESEM_11');
-        map.getPane('pane_WILAYAHKARANGKLESEM_11').style.zIndex = 411;
-        map.getPane('pane_WILAYAHKARANGKLESEM_11').style['mix-blend-mode'] = 'normal';
-        var layer_WILAYAHKARANGKLESEM_11 = new L.geoJson(json_WILAYAHKARANGKLESEM_11, {
+        map.createPane('pane_WILAYAHKARANGKLESEMKU_13');
+        map.getPane('pane_WILAYAHKARANGKLESEMKU_13').style.zIndex = 413;
+        map.getPane('pane_WILAYAHKARANGKLESEMKU_13').style['mix-blend-mode'] = 'normal';
+        var layer_WILAYAHKARANGKLESEMKU_13 = new L.geoJson(json_WILAYAHKARANGKLESEMKU_13, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_WILAYAHKARANGKLESEM_11',
-            layerName: 'layer_WILAYAHKARANGKLESEM_11',
-            pane: 'pane_WILAYAHKARANGKLESEM_11',
-            onEachFeature: pop_WILAYAHKARANGKLESEM_11,
-            style: style_WILAYAHKARANGKLESEM_11_0,
+            dataVar: 'json_WILAYAHKARANGKLESEMKU_13',
+            layerName: 'layer_WILAYAHKARANGKLESEMKU_13',
+            pane: 'pane_WILAYAHKARANGKLESEMKU_13',
+            onEachFeature: pop_WILAYAHKARANGKLESEMKU_13,
+            style: style_WILAYAHKARANGKLESEMKU_13_0,
         });
-        bounds_group.addLayer(layer_WILAYAHKARANGKLESEM_11);
-        map.addLayer(layer_WILAYAHKARANGKLESEM_11);
+        bounds_group.addLayer(layer_WILAYAHKARANGKLESEMKU_13);
+        map.addLayer(layer_WILAYAHKARANGKLESEMKU_13);
         map.on("zoomend", function(e) {
             if (map.getZoom() <= 19 && map.getZoom() >= 17) {
                 map.addLayer(layer_gang_1);
             } else if (map.getZoom() > 19 || map.getZoom() < 17) {
                 map.removeLayer(layer_gang_1);
             }
-            if (map.getZoom() <= 19 && map.getZoom() >= 16) {
+            if (map.getZoom() <= 19 && map.getZoom() >= 15) {
                 map.addLayer(layer_jalandesa_2);
-            } else if (map.getZoom() > 19 || map.getZoom() < 16) {
+            } else if (map.getZoom() > 19 || map.getZoom() < 15) {
                 map.removeLayer(layer_jalandesa_2);
             }
-            if (map.getZoom() <= 19 && map.getZoom() >= 16) {
+            if (map.getZoom() <= 19 && map.getZoom() >= 14) {
                 map.addLayer(layer_jalannasional_3);
-            } else if (map.getZoom() > 19 || map.getZoom() < 16) {
+            } else if (map.getZoom() > 19 || map.getZoom() < 14) {
                 map.removeLayer(layer_jalannasional_3);
             }
             if (map.getZoom() <= 19 && map.getZoom() >= 17) {
@@ -996,26 +2191,24 @@
                 map.removeLayer(layer_BALAIDESA_7);
             }
             if (map.getZoom() <= 19 && map.getZoom() >= 17) {
-                map.addLayer(layer_desapwt_8);
+                map.addLayer(layer_sungai_9);
             } else if (map.getZoom() > 19 || map.getZoom() < 17) {
-                map.removeLayer(layer_desapwt_8);
+                map.removeLayer(layer_sungai_9);
+            }
+            if (map.getZoom() <= 19 && map.getZoom() >= 17) {
+                map.addLayer(layer_desapwt_10);
+            } else if (map.getZoom() > 19 || map.getZoom() < 17) {
+                map.removeLayer(layer_desapwt_10);
+            }
+            if (map.getZoom() <= 17 && map.getZoom() >= 16) {
+                map.addLayer(layer_WILAYAHRTRW_11);
+            } else if (map.getZoom() > 17 || map.getZoom() < 16) {
+                map.removeLayer(layer_WILAYAHRTRW_11);
             }
             if (map.getZoom() <= 16 && map.getZoom() >= 14) {
-                if (!suppressAutoZoom) {
-                    map.addLayer(layer_WILAYAHRW_9);
-                }
+                map.addLayer(layer_WILAYAHRW_12);
             } else if (map.getZoom() > 16 || map.getZoom() < 14) {
-                map.removeLayer(layer_WILAYAHRW_9);
-            }
-            if (map.getZoom() <= 18 && map.getZoom() >= 16) {
-                map.addLayer(layer_WILAYAHRTRW_10);
-            } else if (map.getZoom() > 18 || map.getZoom() < 16) {
-                map.removeLayer(layer_WILAYAHRTRW_10);
-            }
-            if (map.getZoom() <= 14 && map.getZoom() >= 2) {
-                map.addLayer(layer_WILAYAHKARANGKLESEM_11);
-            } else if (map.getZoom() > 14 || map.getZoom() < 2) {
-                map.removeLayer(layer_WILAYAHKARANGKLESEM_11);
+                map.removeLayer(layer_WILAYAHRW_12);
             }
         });
             if (map.getZoom() <= 19 && map.getZoom() >= 17) {
@@ -1023,14 +2216,14 @@
             } else if (map.getZoom() > 19 || map.getZoom() < 17) {
                 map.removeLayer(layer_gang_1);
             }
-            if (map.getZoom() <= 19 && map.getZoom() >= 16) {
+            if (map.getZoom() <= 19 && map.getZoom() >= 15) {
                 map.addLayer(layer_jalandesa_2);
-            } else if (map.getZoom() > 19 || map.getZoom() < 16) {
+            } else if (map.getZoom() > 19 || map.getZoom() < 15) {
                 map.removeLayer(layer_jalandesa_2);
             }
-            if (map.getZoom() <= 19 && map.getZoom() >= 16) {
+            if (map.getZoom() <= 19 && map.getZoom() >= 14) {
                 map.addLayer(layer_jalannasional_3);
-            } else if (map.getZoom() > 19 || map.getZoom() < 16) {
+            } else if (map.getZoom() > 19 || map.getZoom() < 14) {
                 map.removeLayer(layer_jalannasional_3);
             }
             if (map.getZoom() <= 19 && map.getZoom() >= 17) {
@@ -1054,24 +2247,24 @@
                 map.removeLayer(layer_BALAIDESA_7);
             }
             if (map.getZoom() <= 19 && map.getZoom() >= 17) {
-                map.addLayer(layer_desapwt_8);
+                map.addLayer(layer_sungai_9);
             } else if (map.getZoom() > 19 || map.getZoom() < 17) {
-                map.removeLayer(layer_desapwt_8);
+                map.removeLayer(layer_sungai_9);
+            }
+            if (map.getZoom() <= 19 && map.getZoom() >= 17) {
+                map.addLayer(layer_desapwt_10);
+            } else if (map.getZoom() > 19 || map.getZoom() < 17) {
+                map.removeLayer(layer_desapwt_10);
+            }
+            if (map.getZoom() <= 17 && map.getZoom() >= 16) {
+                map.addLayer(layer_WILAYAHRTRW_11);
+            } else if (map.getZoom() > 17 || map.getZoom() < 16) {
+                map.removeLayer(layer_WILAYAHRTRW_11);
             }
             if (map.getZoom() <= 16 && map.getZoom() >= 14) {
-                // layer_WILAYAHRW_9 is intentionally not added on initial load
+                map.addLayer(layer_WILAYAHRW_12);
             } else if (map.getZoom() > 16 || map.getZoom() < 14) {
-                map.removeLayer(layer_WILAYAHRW_9);
-            }
-            if (map.getZoom() <= 18 && map.getZoom() >= 16) {
-                map.addLayer(layer_WILAYAHRTRW_10);
-            } else if (map.getZoom() > 18 || map.getZoom() < 16) {
-                map.removeLayer(layer_WILAYAHRTRW_10);
-            }
-            if (map.getZoom() <= 14 && map.getZoom() >= 2) {
-                map.addLayer(layer_WILAYAHKARANGKLESEM_11);
-            } else if (map.getZoom() > 14 || map.getZoom() < 2) {
-                map.removeLayer(layer_WILAYAHKARANGKLESEM_11);
+                map.removeLayer(layer_WILAYAHRW_12);
             }
         const url = {"Nominatim OSM": "https://nominatim.openstreetmap.org/search?format=geojson&addressdetails=1&",
         "France BAN": "https://api-adresse.data.gouv.fr/search/?"}
@@ -1128,11 +2321,13 @@
         });
         var overlaysTree = [
         {label: '<b>POLYGON</b>',  selectAllCheckbox: true, children: [
-            {label: '<img src="legend/WILAYAHKARANGKLESEM_11.png" /> WILAYAH KARANGKLESEM', layer: layer_WILAYAHKARANGKLESEM_11},
-            {label: '<img src="legend/WILAYAHRTRW_10.png" /> WILAYAH RT & RW', layer: layer_WILAYAHRTRW_10},
-            {label: '<img src="legend/WILAYAHRW_9.png" /> WILAYAH RW', layer: layer_WILAYAHRW_9},
-            {label: '<img src="legend/desapwt_8.png" /> desapwt', layer: layer_desapwt_8},]},
+            {label: '<img src="legend/WILAYAHKARANGKLESEMKU_13.png" /> WILAYAH KARANGKLESEM KU', layer: layer_WILAYAHKARANGKLESEMKU_13},
+            {label: 'WILAYAH RW<br /><table><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_PERUMGSBUKITNIRWANA0.png" /></td><td>PERUM GS BUKIT NIRWANA</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_PERUMMULAWARMAN1.png" /></td><td>PERUM MULAWARMAN</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW012.png" /></td><td>RW 01</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW023.png" /></td><td>RW 02</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW034.png" /></td><td>RW 03</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW045.png" /></td><td>RW 04</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW056.png" /></td><td>RW 05</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW067.png" /></td><td>RW 06</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW078.png" /></td><td>RW 07</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW089.png" /></td><td>RW 08</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW0910.png" /></td><td>RW 09</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW1011.png" /></td><td>RW 10</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW1112.png" /></td><td>RW 11</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW1213.png" /></td><td>RW 12</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_RW1314.png" /></td><td>RW 13</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRW_12_15.png" /></td><td></td></tr></table>', layer: layer_WILAYAHRW_12},
+            {label: 'WILAYAH RT & RW<br /><table><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT5RW100.png" /></td><td>RT  5 RW 10</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW11.png" /></td><td>RT 1 RW 1</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW102.png" /></td><td>RT 1 RW 10</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW113.png" /></td><td>RT 1 RW 11</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW124.png" /></td><td>RT 1 RW 12</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW135.png" /></td><td>RT 1 RW 13</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW26.png" /></td><td>RT 1 RW 2</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW37.png" /></td><td>RT 1 RW 3</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW48.png" /></td><td>RT 1 RW 4</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW59.png" /></td><td>RT 1 RW 5</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW610.png" /></td><td>RT 1 RW 6</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW711.png" /></td><td>RT 1 RW 7</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW812.png" /></td><td>RT 1 RW 8</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT1RW913.png" /></td><td>RT 1 RW 9</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT2RW114.png" /></td><td>RT 2 RW 1</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT2RW1015.png" /></td><td>RT 2 RW 10</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT2RW1216.png" /></td><td>RT 2 RW 12</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT2RW1317.png" /></td><td>RT 2 RW 13</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT2RW218.png" /></td><td>RT 2 RW 2</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT2RW319.png" /></td><td>RT 2 RW 3</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT2RW420.png" /></td><td>RT 2 RW 4</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT2RW521.png" /></td><td>RT 2 RW 5</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT2RW622.png" /></td><td>RT 2 RW 6</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT2RW723.png" /></td><td>RT 2 RW 7</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT2RW824.png" /></td><td>RT 2 RW 8</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT2RW925.png" /></td><td>RT 2 RW 9</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT3RW126.png" /></td><td>RT 3 RW 1</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT3RW1027.png" /></td><td>RT 3 RW 10</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT3RW1228.png" /></td><td>RT 3 RW 12</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT3RW1329.png" /></td><td>RT 3 RW 13</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT3RW230.png" /></td><td>RT 3 RW 2</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT3RW331.png" /></td><td>RT 3 RW 3</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT3RW432.png" /></td><td>RT 3 RW 4</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT3RW533.png" /></td><td>RT 3 RW 5</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT3RW634.png" /></td><td>RT 3 RW 6</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT3RW735.png" /></td><td>RT 3 RW 7</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT3RW836.png" /></td><td>RT 3 RW 8</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT3RW937.png" /></td><td>RT 3 RW 9</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT4RW538.png" /></td><td>RT 4 RW  5</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT4RW1039.png" /></td><td>RT 4 RW 10</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT4RW1240.png" /></td><td>RT 4 RW 12</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT4RW341.png" /></td><td>RT 4 RW 3</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT4RW642.png" /></td><td>RT 4 RW 6</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT4RW743.png" /></td><td>RT 4 RW 7</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT4RW844.png" /></td><td>RT 4 RW 8</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT5RW1245.png" /></td><td>RT 5 RW 12</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT5RW346.png" /></td><td>RT 5 RW 3</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT5RW547.png" /></td><td>RT 5 RW 5</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT5RW748.png" /></td><td>RT 5 RW 7</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT6RW349.png" /></td><td>RT 6 RW 3</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT6RW550.png" /></td><td>RT 6 RW 5</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT6RW651.png" /></td><td>RT 6 RW 6</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT6RW752.png" /></td><td>RT 6 RW 7</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT7RW353.png" /></td><td>RT 7 RW 3</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT7RW554.png" /></td><td>RT 7 RW 5</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT8RW355.png" /></td><td>RT 8 RW 3</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_RT8RW756.png" /></td><td>RT 8 RW 7</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_57.png" /></td><td></td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_PerumSubInti58.png" /></td><td>Perum. Sub Inti</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_PerumMulawarman59.png" /></td><td>Perum. Mulawarman</td></tr><tr><td style="text-align: center;"><img src="legend/WILAYAHRTRW_11_SAWAHRW460.png" /></td><td>SAWAH RW4</td></tr></table>', layer: layer_WILAYAHRTRW_11},
+            {label: '<img src="legend/desapwt_10.png" /> desapwt', layer: layer_desapwt_10},
+            {label: '<img src="legend/sungai_9.png" /> sungai', layer: layer_sungai_9},]},
         {label: '<b>POINT</b>',  selectAllCheckbox: true, children: [
+            {label: '<img src="legend/PointWilayahKarangklesem_8.png" /> Point Wilayah Karangklesem', layer: layer_PointWilayahKarangklesem_8},
             {label: '<img src="legend/BALAIDESA_7.png" /> BALAI DESA', layer: layer_BALAIDESA_7},
             {label: '<img src="legend/Sesarehan_6.png" /> Sesarehan', layer: cluster_Sesarehan_6},
             {label: '<img src="legend/RUMAHSENDIRI_5.png" /> RUMAH SENDIRI', layer: cluster_RUMAHSENDIRI_5},
@@ -1141,7 +2336,7 @@
             {label: '<img src="legend/jalannasional_3.png" /> jalan nasional', layer: layer_jalannasional_3},
             {label: '<img src="legend/jalandesa_2.png" /> jalan desa', layer: layer_jalandesa_2},
             {label: '<img src="legend/gang_1.png" /> gang', layer: layer_gang_1},]},
-            {label: "Google Satellite", layer: layer_GoogleSatellite_0},]
+            {label: "OSM Standard", layer: layer_OSMStandard_0},]
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
             //selectorBack: false,
@@ -1152,16 +2347,28 @@
             collapsed: true,
         });
         lay.addTo(map);
+        map.on("zoomend", function(){
+
+                if (map.hasLayer(layer_PointWilayahKarangklesem_8)) {
+                    if (map.getZoom() <= 19 && map.getZoom() >= 19) {
+                        layer_PointWilayahKarangklesem_8.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_PointWilayahKarangklesem_8.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        });
         setBounds();
-        // disable suppress after initial auto-fit so subsequent manual zooms will trigger layer toggles
-        setTimeout(function() { suppressAutoZoom = false; }, 800);
         var i = 0;
         layer_PointDsKarangklesem_4.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['Point Desa'] !== null?String('<div style="color: #ceff00; font-size: 10pt; font-family: \'Poppins\', sans-serif;">' + layer.feature.properties['Point Desa']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_PointDsKarangklesem_4'});
+            layer.bindTooltip((layer.feature.properties['Point Desa'] !== null?String('<div style="color: #000000; font-size: 10pt; font-weight: bold; font-family: \'Poppins\', sans-serif;">' + layer.feature.properties['Point Desa']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_PointDsKarangklesem_4'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -1174,7 +2381,7 @@
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['NAMA'] !== null?String('<div style="color: #dcff00; font-size: 12pt; font-weight: bold; font-style: italic; font-family: \'Poppins ExtraBold\', sans-serif;">' + layer.feature.properties['NAMA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_RUMAHSENDIRI_5'});
+            layer.bindTooltip((layer.feature.properties['NAMA'] !== null?String('<div style="color: #393e1b; font-size: 10pt; font-weight: bold; font-style: italic; font-family: \'Poppins ExtraBold\', sans-serif;">' + layer.feature.properties['NAMA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_RUMAHSENDIRI_5'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -1187,7 +2394,7 @@
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['NAMA'] !== null?String('<div style="color: #e2ff00; font-size: 12pt; font-weight: bold; font-style: italic; font-family: \'Poppins ExtraBold\', sans-serif;">' + layer.feature.properties['NAMA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Sesarehan_6'});
+            layer.bindTooltip((layer.feature.properties['NAMA'] !== null?String('<div style="color: #3f4320; font-size: 10pt; font-weight: bold; font-style: italic; font-family: \'Poppins ExtraBold\', sans-serif;">' + layer.feature.properties['NAMA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Sesarehan_6'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -1200,7 +2407,7 @@
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['NAMA'] !== null?String('<div style="color: #f3ff00; font-size: 12pt; font-weight: bold; font-style: italic; font-family: \'Poppins ExtraBold\', sans-serif;">' + layer.feature.properties['NAMA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_BALAIDESA_7'});
+            layer.bindTooltip((layer.feature.properties['NAMA'] !== null?String('<div style="color: #474923; font-size: 10pt; font-weight: bold; font-style: italic; font-family: \'Poppins ExtraBold\', sans-serif;">' + layer.feature.properties['NAMA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_BALAIDESA_7'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -1208,12 +2415,12 @@
               i++;
         });
         var i = 0;
-        layer_WILAYAHRW_9.eachLayer(function(layer) {
+        layer_PointWilayahKarangklesem_8.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['NAMA'] !== null?String('<div style="color: #ceff00; font-size: 10pt; font-weight: bold; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['NAMA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_WILAYAHRW_9'});
+            layer.bindTooltip((layer.feature.properties['nama'] !== null?String('<div style="color: #323232; font-size: 10pt; font-weight: bold; font-family: \'Poppins Black\', sans-serif;">' + layer.feature.properties['nama']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_PointWilayahKarangklesem_8'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -1221,12 +2428,12 @@
               i++;
         });
         var i = 0;
-        layer_WILAYAHRTRW_10.eachLayer(function(layer) {
+        layer_WILAYAHRTRW_11.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['NAMA'] !== null?String('<div style="color: #cbff00; font-size: 10pt; font-weight: bold; font-family: \'Poppins Black\', sans-serif;">' + layer.feature.properties['NAMA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_WILAYAHRTRW_10'});
+            layer.bindTooltip((layer.feature.properties['NAMA'] !== null?String('<div style="color: #262626; font-size: 10pt; font-weight: bold; font-family: \'Poppins Black\', sans-serif;">' + layer.feature.properties['NAMA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_WILAYAHRTRW_11'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -1234,27 +2441,38 @@
               i++;
         });
         var i = 0;
-        layer_WILAYAHKARANGKLESEM_11.eachLayer(function(layer) {
+        layer_WILAYAHRW_12.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['NAME_4'] !== null?String('<div style="color: #e5ff00; font-size: 12pt; font-weight: bold; font-family: \'Poppins ExtraBold\', sans-serif;">' + layer.feature.properties['NAME_4']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_WILAYAHKARANGKLESEM_11'});
+            layer.bindTooltip((layer.feature.properties['NAMA'] !== null?String('<div style="color: #292d1a; font-size: 10pt; font-weight: bold; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['NAMA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_WILAYAHRW_12'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
               addLabel(layer, i);
               i++;
         });
-        resetLabels([layer_PointDsKarangklesem_4,layer_RUMAHSENDIRI_5,layer_Sesarehan_6,layer_BALAIDESA_7,layer_desapwt_8,layer_WILAYAHRW_9,layer_WILAYAHRTRW_10,layer_WILAYAHKARANGKLESEM_11]);
+                if (map.hasLayer(layer_PointWilayahKarangklesem_8)) {
+                    if (map.getZoom() <= 19 && map.getZoom() >= 19) {
+                        layer_PointWilayahKarangklesem_8.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_PointWilayahKarangklesem_8.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        resetLabels([layer_PointDsKarangklesem_4,layer_RUMAHSENDIRI_5,layer_Sesarehan_6,layer_BALAIDESA_7,layer_PointWilayahKarangklesem_8,layer_desapwt_10,layer_WILAYAHRTRW_11,layer_WILAYAHRW_12]);
         map.on("zoomend", function(){
-            resetLabels([layer_PointDsKarangklesem_4,layer_RUMAHSENDIRI_5,layer_Sesarehan_6,layer_BALAIDESA_7,layer_desapwt_8,layer_WILAYAHRW_9,layer_WILAYAHRTRW_10,layer_WILAYAHKARANGKLESEM_11]);
+            resetLabels([layer_PointDsKarangklesem_4,layer_RUMAHSENDIRI_5,layer_Sesarehan_6,layer_BALAIDESA_7,layer_PointWilayahKarangklesem_8,layer_desapwt_10,layer_WILAYAHRTRW_11,layer_WILAYAHRW_12]);
         });
         map.on("layeradd", function(){
-            resetLabels([layer_PointDsKarangklesem_4,layer_RUMAHSENDIRI_5,layer_Sesarehan_6,layer_BALAIDESA_7,layer_desapwt_8,layer_WILAYAHRW_9,layer_WILAYAHRTRW_10,layer_WILAYAHKARANGKLESEM_11]);
+            resetLabels([layer_PointDsKarangklesem_4,layer_RUMAHSENDIRI_5,layer_Sesarehan_6,layer_BALAIDESA_7,layer_PointWilayahKarangklesem_8,layer_desapwt_10,layer_WILAYAHRTRW_11,layer_WILAYAHRW_12]);
         });
         map.on("layerremove", function(){
-            resetLabels([layer_PointDsKarangklesem_4,layer_RUMAHSENDIRI_5,layer_Sesarehan_6,layer_BALAIDESA_7,layer_desapwt_8,layer_WILAYAHRW_9,layer_WILAYAHRTRW_10,layer_WILAYAHKARANGKLESEM_11]);
+            resetLabels([layer_PointDsKarangklesem_4,layer_RUMAHSENDIRI_5,layer_Sesarehan_6,layer_BALAIDESA_7,layer_PointWilayahKarangklesem_8,layer_desapwt_10,layer_WILAYAHRTRW_11,layer_WILAYAHRW_12]);
         });
         </script>        
     </body>

@@ -10,7 +10,7 @@
   <style>
     body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
     
-    /* Existing Gradients & Hovers */
+    /* Gradients & Backgrounds */
     .gradient-bg {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       background-size: 200% 200%;
@@ -21,17 +21,23 @@
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+    
+    /* Card Hover Effects */
     .card-hover { transition: all 0.3s ease; }
     .card-hover:hover {
       transform: translateY(-10px);
       box-shadow: 0 25px 40px -5px rgba(0, 0, 0, 0.1);
     }
+    
+    /* Navigation Link Styles */
     .nav-link { position: relative; }
     .nav-link::after {
       content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px;
       background-color: white; transition: width 0.3s ease;
     }
     .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    
+    /* Map Preview Styles */
     .map-preview {
       position: relative; overflow: hidden; height: 200px;
       background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
@@ -43,11 +49,9 @@
     }
     .card-hover:hover .map-overlay { opacity: 1; }
 
-    /* --- NEW ANIMATIONS --- */
-    /* Base class for elements to animate */
+    /* --- ANIMATIONS --- */
     .animate-on-scroll { opacity: 0; transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
     
-    /* Keyframes */
     @keyframes fadeInUpSmooth {
       from { opacity: 0; transform: translate3d(0, 40px, 0); }
       to { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -66,7 +70,6 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
-    /* Active states (triggered by JS) */
     .animate-active { opacity: 1; }
     .animate-active.fade-up { animation: fadeInUpSmooth 0.8s forwards; }
     .animate-active.fade-left { animation: fadeInLeftSmooth 0.8s forwards; }
@@ -85,6 +88,7 @@
 </head>
 <body class="h-full bg-gray-50">
   <div id="app" class="h-full w-full flex flex-col overflow-auto">
+    
     <header class="gradient-bg text-white shadow-lg sticky top-0 z-50">
       <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
@@ -210,37 +214,113 @@
             </div>
 
             <div class="mt-20 mb-12">
-              <div class="text-center mb-10 animate-on-scroll fade-up">
-                  <h2 class="text-3xl font-extrabold text-gray-800">Daftar Kelurahan Administrasi</h2>
-                  <div class="w-24 h-1 bg-purple-500 mx-auto mt-4 rounded-full"></div>
-              </div>
-              
-              <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 px-2">
-                <div class="animate-on-scroll zoom-in delay-100 bg-white p-4 rounded-2xl shadow-sm border-2 border-transparent hover:border-purple-400 text-center group transition-all duration-300 hover:shadow-md cursor-default">
-                  <p class="font-bold text-gray-700 group-hover:text-purple-700">Berkoh</p>
+                <div class="text-center mb-10 animate-on-scroll fade-up">
+                    <h2 class="text-3xl font-extrabold text-gray-800">Daftar Kelurahan Administrasi</h2>
+                    <p class="text-gray-500 mt-2">Visualisasi batas wilayah per kelurahan</p>
+                    <div class="w-24 h-1 bg-purple-500 mx-auto mt-4 rounded-full"></div>
                 </div>
-                <div class="animate-on-scroll zoom-in delay-200 bg-white p-4 rounded-2xl shadow-sm border-2 border-transparent hover:border-purple-400 text-center group transition-all duration-300 hover:shadow-md cursor-default">
-                  <p class="font-bold text-gray-700 group-hover:text-purple-700">Karangklesem</p>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-2">
+                  
+                  <div class="animate-on-scroll zoom-in delay-100 relative group h-56 rounded-3xl overflow-hidden bg-white shadow-lg hover:shadow-2xl border border-gray-100 transition-all duration-300">
+                      <div class="absolute inset-0 bg-purple-50 opacity-50" style="background-image: radial-gradient(#d8b4fe 1px, transparent 1px); background-size: 10px 10px;"></div>
+                      <div class="absolute inset-0 p-6 flex items-center justify-center">
+                          <img src="images/desa/BERKOH.png" alt="Peta Berkoh" class="w-full h-full object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500">
+                      </div>
+                      <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-purple-900/90 to-purple-900/0 pt-10 pb-4 px-4 flex justify-between items-end">
+                        <div>
+                          <p class="text-xs text-white/80 font-medium uppercase tracking-wider">Kelurahan</p>
+                          <h3 class="text-xl font-bold text-white group-hover:text-yellow-300 transition-colors">Berkoh</h3>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="animate-on-scroll zoom-in delay-200 relative group h-56 rounded-3xl overflow-hidden bg-white shadow-lg hover:shadow-2xl border border-gray-100 transition-all duration-300 cursor-pointer" onclick="navigateToPage('karangklesem')">
+                      <div class="absolute inset-0 bg-blue-50 opacity-50" style="background-image: radial-gradient(#93c5fd 1px, transparent 1px); background-size: 10px 10px;"></div>
+                      <div class="absolute inset-0 p-6 flex items-center justify-center">
+                          <img src="images/desa/KARANGKLESEM.png" alt="Peta Karangklesem" class="w-full h-full object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500">
+                      </div>
+                      <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-blue-900/90 to-blue-900/0 pt-10 pb-4 px-4 flex justify-between items-end">
+                        <div>
+                           <p class="text-xs text-white/80 font-medium uppercase tracking-wider">Kelurahan</p>
+                          <h3 class="text-xl font-bold text-white group-hover:text-yellow-300 transition-colors">Karangklesem</h3>
+                        </div>
+                        <div class="bg-white/20 p-2 rounded-full backdrop-blur-sm animate-pulse">
+                           <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="animate-on-scroll zoom-in delay-300 relative group h-56 rounded-3xl overflow-hidden bg-white shadow-lg hover:shadow-2xl border border-gray-100 transition-all duration-300">
+                      <div class="absolute inset-0 bg-emerald-50 opacity-50" style="background-image: radial-gradient(#6ee7b7 1px, transparent 1px); background-size: 10px 10px;"></div>
+                      <div class="absolute inset-0 p-6 flex items-center justify-center">
+                          <img src="images/desa/KARANGPUCUNG.png" alt="Peta Karangpucung" class="w-full h-full object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500">
+                      </div>
+                      <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-emerald-900/90 to-emerald-900/0 pt-10 pb-4 px-4 flex justify-between items-end">
+                        <div>
+                           <p class="text-xs text-white/80 font-medium uppercase tracking-wider">Kelurahan</p>
+                          <h3 class="text-xl font-bold text-white group-hover:text-yellow-300 transition-colors">Karangpucung</h3>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="animate-on-scroll zoom-in delay-400 relative group h-56 rounded-3xl overflow-hidden bg-white shadow-lg hover:shadow-2xl border border-gray-100 transition-all duration-300">
+                      <div class="absolute inset-0 bg-orange-50 opacity-50" style="background-image: radial-gradient(#fdba74 1px, transparent 1px); background-size: 10px 10px;"></div>
+                      <div class="absolute inset-0 p-6 flex items-center justify-center">
+                          <img src="images/desa/PURWOKERTO KIDUL.png" alt="Peta Pwt Kidul" class="w-full h-full object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500">
+                      </div>
+                      <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-orange-900/90 to-orange-900/0 pt-10 pb-4 px-4 flex justify-between items-end">
+                        <div>
+                           <p class="text-xs text-white/80 font-medium uppercase tracking-wider">Kelurahan</p>
+                          <h3 class="text-xl font-bold text-white group-hover:text-yellow-300 transition-colors">Pwt. Kidul</h3>
+                        </div>
+                      </div>
+                  </div>
+                  
+                  <div class="animate-on-scroll zoom-in delay-500 relative group h-56 rounded-3xl overflow-hidden bg-white shadow-lg hover:shadow-2xl border border-gray-100 transition-all duration-300">
+                      <div class="absolute inset-0 bg-red-50 opacity-50" style="background-image: radial-gradient(#fca5a5 1px, transparent 1px); background-size: 10px 10px;"></div>
+                      <div class="absolute inset-0 p-6 flex items-center justify-center">
+                          <img src="images/desa/PURWOKERTO KULON.png" alt="Peta Pwt Kulon" class="w-full h-full object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500">
+                      </div>
+                      <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-red-900/90 to-red-900/0 pt-10 pb-4 px-4 flex justify-between items-end">
+                        <div>
+                           <p class="text-xs text-white/80 font-medium uppercase tracking-wider">Kelurahan</p>
+                          <h3 class="text-xl font-bold text-white group-hover:text-yellow-300 transition-colors">Pwt. Kulon</h3>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="animate-on-scroll zoom-in delay-600 relative group h-56 rounded-3xl overflow-hidden bg-white shadow-lg hover:shadow-2xl border border-gray-100 transition-all duration-300">
+                      <div class="absolute inset-0 bg-teal-50 opacity-50" style="background-image: radial-gradient(#5eead4 1px, transparent 1px); background-size: 10px 10px;"></div>
+                      <div class="absolute inset-0 p-6 flex items-center justify-center">
+                          <img src="images/desa/TANJUNG.png" alt="Peta Tanjung" class="w-full h-full object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500">
+                      </div>
+                      <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-teal-900/90 to-teal-900/0 pt-10 pb-4 px-4 flex justify-between items-end">
+                        <div>
+                           <p class="text-xs text-white/80 font-medium uppercase tracking-wider">Kelurahan</p>
+                          <h3 class="text-xl font-bold text-white group-hover:text-yellow-300 transition-colors">Tanjung</h3>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="animate-on-scroll zoom-in delay-700 relative group h-56 rounded-3xl overflow-hidden bg-white shadow-lg hover:shadow-2xl border border-gray-100 transition-all duration-300">
+                      <div class="absolute inset-0 bg-indigo-50 opacity-50" style="background-image: radial-gradient(#a5b4fc 1px, transparent 1px); background-size: 10px 10px;"></div>
+                      <div class="absolute inset-0 p-6 flex items-center justify-center">
+                          <img src="images/desa/TELUK.png" alt="Peta Teluk" class="w-full h-full object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500">
+                      </div>
+                      <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-indigo-900/90 to-indigo-900/0 pt-10 pb-4 px-4 flex justify-between items-end">
+                        <div>
+                           <p class="text-xs text-white/80 font-medium uppercase tracking-wider">Kelurahan</p>
+                          <h3 class="text-xl font-bold text-white group-hover:text-yellow-300 transition-colors">Teluk</h3>
+                        </div>
+                      </div>
+                  </div>
+
                 </div>
-                <div class="animate-on-scroll zoom-in delay-300 bg-white p-4 rounded-2xl shadow-sm border-2 border-transparent hover:border-purple-400 text-center group transition-all duration-300 hover:shadow-md cursor-default">
-                  <p class="font-bold text-gray-700 group-hover:text-purple-700">Karangpucung</p>
-                </div>
-                <div class="animate-on-scroll zoom-in delay-400 bg-white p-4 rounded-2xl shadow-sm border-2 border-transparent hover:border-purple-400 text-center group transition-all duration-300 hover:shadow-md cursor-default">
-                  <p class="font-bold text-gray-700 group-hover:text-purple-700">Purwokerto Kidul</p>
-                </div>
-                <div class="animate-on-scroll zoom-in delay-500 bg-white p-4 rounded-2xl shadow-sm border-2 border-transparent hover:border-purple-400 text-center group transition-all duration-300 hover:shadow-md cursor-default">
-                  <p class="font-bold text-gray-700 group-hover:text-purple-700">Purwokerto Kulon</p>
-                </div>
-                <div class="animate-on-scroll zoom-in delay-600 bg-white p-4 rounded-2xl shadow-sm border-2 border-transparent hover:border-purple-400 text-center group transition-all duration-300 hover:shadow-md cursor-default">
-                  <p class="font-bold text-gray-700 group-hover:text-purple-700">Tanjung</p>
-                </div>
-                <div class="animate-on-scroll zoom-in delay-700 bg-white p-4 rounded-2xl shadow-sm border-2 border-transparent hover:border-purple-400 text-center group transition-all duration-300 hover:shadow-md cursor-default">
-                  <p class="font-bold text-gray-700 group-hover:text-purple-700">Teluk</p>
-                </div>
-              </div>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8 mt-24 mb-16">
+              
               <div class="animate-on-scroll fade-up bg-white rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer group" data-navigate="purwokerto">
                 <div class="map-preview relative h-64">
                    <div class="absolute inset-0 bg-gradient-to-t from-purple-900/60 to-transparent z-10"></div>
@@ -395,7 +475,7 @@
       mobileMenu.classList.toggle('hidden');
     });
 
-    // --- NEW SCROLL ANIMATION LOGIC (Intersection Observer) ---
+    // --- SCROLL ANIMATION LOGIC (Intersection Observer) ---
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
 
     const observerOptions = {
@@ -408,7 +488,6 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('animate-active');
-          // Stop observing once animated (optional, remove if you want re-triggering)
           observer.unobserve(entry.target); 
         }
       });

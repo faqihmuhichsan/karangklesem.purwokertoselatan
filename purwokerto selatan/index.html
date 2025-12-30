@@ -127,8 +127,8 @@
             if (bounds_group.getLayers().length) {
                 map.fitBounds(bounds_group.getBounds());
             }
-            map.setMaxBounds(map.getBounds());
-            map.setMinZoom(map.getZoom());
+            // map.setMaxBounds(map.getBounds());
+            // map.setMinZoom(map.getZoom());
         }
         map.createPane('pane_OSMStandard_0');
         map.getPane('pane_OSMStandard_0').style.zIndex = 400;

@@ -90,10 +90,25 @@
               <h1 class="text-sm sm:text-base font-bold leading-tight">Purwokerto Selatan</h1>
             </div>
           </div>
-          <div class="hidden md:flex space-x-1 lg:space-x-2">
+          <div class="hidden md:flex space-x-1 lg:space-x-2 items-center">
             <a href="#" class="nav-link active px-4 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition" data-page="home">Beranda</a>
             <a href="#" class="nav-link px-4 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition" data-page="purwokerto">Peta Kecamatan</a>
-            <a href="#" class="nav-link px-4 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition" data-page="karangklesem">Peta Karangklesem</a>
+
+            <div class="relative group" tabindex="0">
+              <button class="nav-link px-4 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition flex items-center" aria-haspopup="true" aria-expanded="false">Peta Desa
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+              <div class="absolute left-0 top-full mt-0 w-44 z-50 bg-white text-slate-800 rounded-lg shadow-lg opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto transform scale-95 group-hover:scale-100 group-focus-within:scale-100 transition-all">
+                <a href="desa/berkoh/index.html" class="block px-4 py-2 text-sm hover:bg-slate-100">Berkoh</a>
+                <a href="desa/karangklesem/index.html" class="block px-4 py-2 text-sm hover:bg-slate-100">Karangklesem</a>
+                <a href="desa/karangpucung/index.html" class="block px-4 py-2 text-sm hover:bg-slate-100">Karangpucung</a>
+                <a href="desa/teluk/index.html" class="block px-4 py-2 text-sm hover:bg-slate-100">Teluk</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-500">Pwt. Kidul</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-500">Pwt. Kulon</a>
+                <a href="purwokerto selatan/index.html" class="block px-4 py-2 text-sm hover:bg-slate-100">Pwt. Kecamatan</a>
+              </div>
+            </div>
+
             <a href="#" class="nav-link px-4 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition" data-page="about">Tentang Saya</a>
           </div>
           <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md hover:bg-white/10 transition active:scale-95">
@@ -103,8 +118,12 @@
         <div id="mobile-menu" class="hidden md:hidden pb-4 bg-indigo-900 absolute left-0 right-0 px-4 shadow-xl border-t border-indigo-800">
           <a href="#" class="block px-3 py-3 text-base font-medium hover:bg-white/10 rounded-md border-b border-white/5" data-page="home">Beranda</a>
           <a href="#" class="block px-3 py-3 text-base font-medium hover:bg-white/10 rounded-md border-b border-white/5" data-page="purwokerto">Peta Kecamatan</a>
-          <a href="#" class="block px-3 py-3 text-base font-medium hover:bg-white/10 rounded-md border-b border-white/5" data-page="karangklesem">Peta Karangklesem</a>
-          <a href="#" class="block px-3 py-3 text-base font-medium hover:bg-white/10 rounded-md" data-page="about">Tentang Saya</a>
+          <a href="desa/berkoh/index.html" class="block px-3 py-3 text-base font-medium hover:bg-white/10 rounded-md border-b border-white/5">Berkoh</a>
+          <a href="desa/karangklesem/index.html" class="block px-3 py-3 text-base font-medium hover:bg-white/10 rounded-md border-b border-white/5">Karangklesem</a>
+          <a href="desa/karangpucung/index.html" class="block px-3 py-3 text-base font-medium hover:bg-white/10 rounded-md border-b border-white/5">Karangpucung</a>
+          <a href="desa/teluk/index.html" class="block px-3 py-3 text-base font-medium hover:bg-white/10 rounded-md border-b border-white/5">Teluk</a>
+          <a href="purwokerto selatan/index.html" class="block px-3 py-3 text-base font-medium hover:bg-white/10 rounded-md border-b border-white/5">Pwt. Kecamatan</a>
+          <a href="#" class="block px-3 py-3 text-base font-medium hover:bg-white/10 rounded-md" data-page="about">Tentang</a>
         </div>
       </nav>
     </header>
@@ -322,7 +341,7 @@
                 
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-2">
                   
-                  <div class="animate-on-scroll card-hover relative group h-[28rem] rounded-2xl overflow-hidden bg-white shadow-md border border-slate-100 flex flex-col">
+                  <div class="animate-on-scroll card-hover relative group h-[28rem] rounded-2xl overflow-hidden bg-white shadow-md border border-slate-100 flex flex-col" onclick="window.location.href='desa/berkoh/index.html'">
                       <div class="h-[18rem] p-1 flex items-center justify-center bg-purple-50">
                           <img src="images/desa/BERKOH.png" class="h-full w-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500" alt="Berkoh">
                       </div>
@@ -341,7 +360,7 @@
                       </div>
                   </div>
 
-                  <div class="animate-on-scroll stagger-delay-1 card-hover relative group h-[28rem] rounded-2xl overflow-hidden bg-white shadow-md border-2 border-blue-400 cursor-pointer flex flex-col" onclick="navigateToPage('karangklesem')">
+                  <div class="animate-on-scroll stagger-delay-1 card-hover relative group h-[28rem] rounded-2xl overflow-hidden bg-white shadow-md border-2 border-blue-400 cursor-pointer flex flex-col" onclick="window.location.href='desa/karangklesem/index.html'">
                        <div class="absolute top-2 right-2 z-10">
                           <span class="flex h-3 w-3">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
@@ -369,7 +388,7 @@
                       </div>
                   </div>
 
-                  <div class="animate-on-scroll stagger-delay-2 card-hover relative group h-[28rem] rounded-2xl overflow-hidden bg-white shadow-md border border-slate-100 flex flex-col">
+                  <div class="animate-on-scroll stagger-delay-2 card-hover relative group h-[28rem] rounded-2xl overflow-hidden bg-white shadow-md border border-slate-100 flex flex-col" onclick="window.location.href='desa/karangpucung/index.html'">
                       <div class="h-[18rem] p-1 flex items-center justify-center bg-emerald-50">
                           <img src="images/desa/KARANGPUCUNG.png" class="h-full w-full object-contain group-hover:scale-110 transition-transform" alt="Karangpucung">
                       </div>
@@ -388,7 +407,7 @@
                       </div>
                   </div>
 
-                  <div class="animate-on-scroll stagger-delay-3 card-hover relative group h-[28rem] rounded-2xl overflow-hidden bg-white shadow-md border border-slate-100 flex flex-col">
+                  <div class="animate-on-scroll stagger-delay-3 card-hover relative group h-[28rem] rounded-2xl overflow-hidden bg-white shadow-md border border-slate-100 flex flex-col" onclick="window.location.href='desa/teluk/index.html'">
                       <div class="h-[18rem] p-1 flex items-center justify-center bg-orange-50">
                           <img src="images/desa/PURWOKERTO KIDUL.png" class="h-full w-full object-contain group-hover:scale-110 transition-transform" alt="Kidul">
                       </div>
@@ -469,35 +488,18 @@
 
             <div class="grid md:grid-cols-2 gap-8 mt-24 mb-16">
               
-              <div class="animate-on-scroll group bg-white rounded-3xl shadow-xl overflow-hidden cursor-pointer border border-indigo-100 transform transition duration-500 hover:-translate-y-2" data-navigate="purwokerto">
-                <div class="map-preview relative h-72 overflow-hidden bg-indigo-900">
+              <div class="md:col-span-2 animate-on-scroll group bg-white rounded-3xl shadow-xl overflow-hidden cursor-pointer border border-indigo-100 transform transition duration-500 hover:-translate-y-2" data-navigate="purwokerto">
+                <div class="map-preview relative h-96 overflow-hidden bg-indigo-900">
                    <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                   <div class="absolute inset-0 flex items-center justify-center">
-                     <svg class="w-32 h-32 text-white/20 transition-transform duration-700 group-hover:scale-125 group-hover:rotate-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
-                   </div>
+                   <!-- Embedded larger preview of Purwokerto Selatan map (non-interactive) -->
+                   <iframe src="purwokerto selatan/index.html" class="w-full h-full border-0" loading="lazy" title="Peta Purwokerto Selatan" style="pointer-events:none"></iframe>
                    <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm">
-                       <span class="bg-yellow-400 text-indigo-900 font-bold px-6 py-2 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform">Buka Peta &rarr;</span>
+                       <span class="bg-yellow-400 text-indigo-900 font-bold px-6 py-2 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform">Buka Peta Kecamatan &rarr;</span>
                    </div>
                 </div>
                 <div class="p-8">
-                  <h4 class="text-2xl font-bold text-gray-800 mb-2 group-hover:text-indigo-600 transition-colors">Peta Kecamatan</h4>
-                  <p class="text-gray-500 text-sm">Lihat Peta disini.</p>
-                </div>
-              </div>
-
-               <div class="animate-on-scroll stagger-delay-2 group bg-white rounded-3xl shadow-xl overflow-hidden cursor-pointer border border-blue-100 transform transition duration-500 hover:-translate-y-2" data-navigate="karangklesem">
-                <div class="map-preview relative h-72 overflow-hidden bg-blue-600">
-                   <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                   <div class="absolute inset-0 flex items-center justify-center">
-                     <svg class="w-32 h-32 text-white/20 transition-transform duration-700 group-hover:scale-125 group-hover:-rotate-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-                   </div>
-                   <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm">
-                       <span class="bg-blue-400 text-white font-bold px-6 py-2 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform">Buka Detail &rarr;</span>
-                   </div>
-                </div>
-                <div class="p-8">
-                  <h4 class="text-2xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">Peta Karangklesem</h4>
-                  <p class="text-gray-500 text-sm">Peta Mikro Wilayah Kelurahan Karangklesem.</p>
+                  <h4 class="text-2xl font-bold text-gray-800 mb-2 group-hover:text-indigo-600 transition-colors">Peta Kecamatan Purwokerto Selatan</h4>
+                  <p class="text-gray-500 text-sm">Fokus tampilan: Peta Purwokerto Selatan.</p>
                 </div>
               </div>
 
@@ -683,12 +685,25 @@
     document.querySelectorAll('[data-page]').forEach(el => {
       el.addEventListener('click', (e) => {
         e.preventDefault();
+        if (el.dataset && el.dataset.href) {
+          window.location.href = el.dataset.href;
+          return;
+        }
         navigateToPage(el.dataset.page);
       });
     });
 
-    document.querySelectorAll('[data-navigate]').forEach(el => {
-      el.addEventListener('click', () => navigateToPage(el.dataset.navigate));
+    document.querySelectorAll('[data-navigate], [data-href]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        if (e && typeof e.preventDefault === 'function') e.preventDefault();
+        if (el.dataset && el.dataset.href) {
+          window.location.href = el.dataset.href;
+          return;
+        }
+        if (el.dataset && el.dataset.navigate) {
+          navigateToPage(el.dataset.navigate);
+        }
+      });
     });
 
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');

@@ -1,0 +1,1 @@
+var json_BALAIDESATELUK_2 = {"type":"FeatureCollection","name":"BALAIDESATELUK_2","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"NAMA":"Kelurahan Teluk"},"geometry":{"type":"Point","coordinates":[109.250782918612572,-7.446991033008733]}}]}

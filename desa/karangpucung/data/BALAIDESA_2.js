@@ -1,0 +1,1 @@
+var json_BALAIDESA_2 = {"type":"FeatureCollection","name":"BALAIDESA_2","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"fid":"1","NAMA":"Keluarahan Karangpucung"},"geometry":{"type":"Point","coordinates":[109.237308381407615,-7.444292435754734]}}]}

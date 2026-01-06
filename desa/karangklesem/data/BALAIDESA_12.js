@@ -1,0 +1,1 @@
+var json_BALAIDESA_12 = {"type":"FeatureCollection","name":"BALAIDESA_12","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"NAMA":"Balai Desa Kelurahan Karangklesem"},"geometry":{"type":"Point","coordinates":[109.241668025340829,-7.445214075521475]}}]}

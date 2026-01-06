@@ -1,1 +1,0 @@
-var json_PointWilayahKarangklesem_8 = {"type":"FeatureCollection","name":"PointWilayahKarangklesem_8","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"nama":"Karangklesem"},"geometry":{"type":"Point","coordinates":[109.240243517139973,-7.454210461761869]}}]}

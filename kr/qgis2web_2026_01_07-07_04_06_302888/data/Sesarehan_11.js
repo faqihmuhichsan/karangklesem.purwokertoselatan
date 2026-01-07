@@ -1,0 +1,1 @@
+var json_Sesarehan_11 = {"type":"FeatureCollection","name":"Sesarehan_11","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"NAMA":"Sesarehan/ Kuburan"},"geometry":{"type":"Point","coordinates":[109.241072902303813,-7.456112266138737]}}]}

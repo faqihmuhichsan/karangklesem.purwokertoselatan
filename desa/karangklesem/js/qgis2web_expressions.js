@@ -754,30 +754,3 @@ function fnc__specialcol_(values, context) {
 function fnc_project_color(values, context) {
     return false;
 };
-
-
-
-function exp_label_WILAYAHRTRW_3_eval_expression(context) {
-    // NAMA
-
-    var feature = context.feature;
-    
-    if (feature.properties) {
-        return feature.properties['NAMA'] ;
-    } else {
-        return feature['NAMA'] ;
-    }
-}
-
-
-function exp_label_WILAYAHRTRW_3_eval_expression(context) {
-    // NAMA
-
-    var feature = context.feature;
-    
-    if (feature.properties) {
-        return feature.properties['NAMA'] ;
-    } else {
-        return feature['NAMA'] ;
-    }
-}

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peta Desa Teluk</title>
+    <link rel="icon" href="../../images/Lambang Banyumas Asli.png" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+    <link rel="stylesheet" href="css/qgis2web.css">
+    <link rel="stylesheet" href="css/leaflet-measure.css">
+    <link rel="stylesheet" href="css/leaflet-search.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; height: 100%; }
+        header { z-index: 1000; position: relative; }
+        #map { width: 100%; height: calc(100vh - 64px - 75px); position: relative; z-index: 1; background: #f8fafc; }
+        
+        .nav-link { position: relative; overflow: hidden; }
+        .nav-link::before {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
+            background-color: #fde047; transform: scaleX(0); transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        .nav-link:hover::before { transform: scaleX(1); transform-origin: left; }
+
+        .custom-label {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #312e81; border-radius: 4px;
+            padding: 1px 5px; font-size: 10px; font-weight: 700; color: #1e1b4b;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); white-space: nowrap;
+        }
+
+        .label-nama-desa-utama {
+            background: transparent !important; border: none !important; box-shadow: none !important;
+            color: #a62bcc !important; 
+            font-size: 16px !important; font-weight: 900 !important;
+            text-transform: uppercase; 
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; 
+            white-space: nowrap; letter-spacing: 1px; pointer-events: none;
+        }
+        
+        .custom-div-icon i { filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.4)); transition: transform 0.2s; }
+        .custom-div-icon:hover i { transform: scale(1.5) translateY(-5px); color: #fbbf24 !important; cursor: pointer; }
+        .leaflet-control-measure-toggle { background-image: none !important; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="bg-indigo-900/95 backdrop-blur-md text-white shadow-lg sticky top-0 z-[1001]">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3 group cursor-pointer" onclick="window.location.href='../../index.html'">
+                    <img src="../../images/Lambang Banyumas Asli.png" alt="Logo" class="relative w-10 h-10 rounded-full bg-white p-1 transition-transform group-hover:rotate-12">
+                    <div>
+                        <span class="font-bold hidden sm:block text-base">Purwokerto Selatan</span>
+                        <p class="text-[10px] text-yellow-400 font-medium uppercase tracking-tighter sm:block hidden">Desa Teluk</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex space-x-2 items-center">
+                    <a href="../../index.html" class="nav-link px-3 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition">Beranda</a>
+                    <a href="../../purwokerto selatan/index.html" class="nav-link px-3 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition">Peta Kecamatan</a>
+                    <div class="relative group" tabindex="0">
+                        <button id="desa-dropdown-btn" class="nav-link px-4 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition flex items-center">
+                            Peta Desa <i class="fas fa-chevron-down ml-2 text-[10px]"></i>
+                        </button>
+                        <div id="desa-dropdown-menu" class="absolute left-0 top-full mt-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transform scale-95 group-hover:scale-100 transition-all duration-200 border border-slate-100 overflow-hidden">
+                            <a href="../berkoh/berkoh.html" class="block px-4 py-2 text-sm hover:bg-indigo-50 border-b border-slate-100 transition-colors"><i class="fas fa-map-marker-alt text-indigo-500 mr-2"></i>Berkoh</a>
+                            <a href="../karangklesem/karangklesem.html" class="block px-4 py-2 text-sm hover:bg-indigo-50 border-b border-slate-100 transition-colors"><i class="fas fa-map-marker-alt text-indigo-500 mr-2"></i>Karangklesem</a>
+                            <a href="../karangpucung/karangpucung.html" class="block px-4 py-2 text-sm hover:bg-indigo-50 border-b border-slate-100 transition-colors"><i class="fas fa-map-marker-alt text-indigo-500 mr-2"></i>Karangpucung</a>
+                            <a href="teluk.html" class="block px-4 py-2 text-sm bg-indigo-50 font-bold text-indigo-700"><i class="fas fa-map-marker-alt text-indigo-700 mr-2"></i>Teluk</a>
+                        </div>
+                    </div>
+                    <a href="../../index.html#about" class="nav-link px-3 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition">Tentang</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2"><i class="fas fa-bars text-xl"></i></button>
+            </div>
+        </nav>
+    </header>
+
+    <main><div id="map"></div></main>
+    <div id="map-title-popup" class="fixed top-20 left-1/2 transform -translate-x-1/2 bg-white border-l-4 border-indigo-900 text-slate-800 rounded px-3 py-2 shadow-md z-50">
+            <strong class="text-xs font-bold tracking-wide">DESA TELUK</strong>
+    </div>
+
+    <footer style="position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px 20px; border-top: 2px solid #e5e7eb; z-index: 1000;">
+        <div class="max-w-7xl mx-auto flex justify-between items-center gap-4">
+            <div>
+                <h3 class="text-base font-bold text-slate-800 m-0">Kelurahan Teluk</h3>
+                <p class="text-[11px] text-slate-500 mt-1">Status: Filter Visibilitas Fasilitas Umum Terpasang</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="centerMap()" class="bg-yellow-500 text-white px-3 py-2 rounded-lg text-xs font-bold transition hover:bg-yellow-600">Fokus</button>
+                <a href="../../index.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-xs font-bold transition hover:bg-indigo-700">← Kembali</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/qgis2web_expressions.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/L.Control.Layers.Tree.min.js"></script>
+    <script src="js/Autolinker.min.js"></script>
+    <script src="js/leaflet-measure.js"></script>
+    <script src="js/leaflet-search.js"></script>
+
+    <script src="data/BATASTELUK_1.js"></script>
+    <script src="data/jalanteluk_3.js"></script>
+    <script src="data/BALAIDESATELUK_2.js"></script>
+
+    <script>
+        var map = L.map('map', { zoomControl: true, maxZoom: 22, minZoom: 3 });
+        L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxNativeZoom: 19, maxZoom: 22 }).addTo(map);
+
+        function getIcon(name) {
+            let iconClass = "fa-map-marker-alt", color = "#ef4444";
+            const n = (name || "").toLowerCase();
+            if (n.includes('balai desa')) { iconClass = "fa-landmark"; color = "#1e40af"; }
+            else if (n.includes('masjid')) { iconClass = "fa-mosque"; color = "#15803d"; }
+            else if (n.includes('sekolah') || n.includes('sd')) { iconClass = "fa-graduation-cap"; color = "#a16207"; }
+            else if (n.includes('toko') || n.includes('mart')) { iconClass = "fa-shopping-basket"; color = "#0d9488"; }
+            return L.divIcon({
+                html: `<i class="fas ${iconClass}" style="color: ${color}; font-size: 18px;"></i>`,
+                className: 'custom-div-icon', iconSize: [20, 20], iconAnchor: [10, 10], popupAnchor: [0, -10]
+            });
+        }
+
+        // --- LAYER BATAS DESA ---
+        var layerBatasDesa = L.geoJson(json_BATASTELUK_1, { 
+            style: { 
+                color: '#a62bcc', weight: 4, dashArray: '', fillColor: '#a855f7', fillOpacity: 0.05 
+            },
+            onEachFeature: function(feature, layer) {
+                layer.bindTooltip("DESA TELUK", { permanent: true, direction: 'center', className: 'label-nama-desa-utama' });
+                layer.on({
+                    mouseover: function(e) { 
+                        e.target.setStyle({ weight: 5, color: '#fbbf24', fillOpacity: 0.2 }); 
+                        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) { e.target.bringToFront(); }
+                    },
+                    mouseout: function(e) { layerBatasDesa.resetStyle(e.target); },
+                    click: function(e) { map.fitBounds(e.target.getBounds()); }
+                });
+            }
+        }).addTo(map);
+
+        // --- LAYER JALAN ---
+        var layerJalan = L.geoJson(json_jalanteluk_3, { 
+            style: { color: '#475569', weight: 2.5, opacity: 0.8 },
+            onEachFeature: function(feature, layer) {
+                layer.on({
+                    mouseover: function(e) { e.target.setStyle({ color: '#06b6d4', weight: 5, opacity: 1 }); },
+                    mouseout: function(e) { layerJalan.resetStyle(e.target); },
+                    click: function(e) { if(feature.properties.name) layer.bindPopup("<b>"+feature.properties.name+"</b>").openPopup(); }
+                });
+            }
+        });
+
+        // --- LAYER BALAI DESA ---
+        var layerFasum = L.geoJson(json_BALAIDESATELUK_2, {
+            onEachFeature: (f, layer) => { 
+                const n = f.properties.NAMA || "Lokasi"; 
+                layer.bindPopup(`<b>${n}</b>`); 
+                layer.bindTooltip(n, {permanent:true, direction:'top', offset:[0,-10], className:'custom-label'}); 
+            },
+            pointToLayer: (f, latlng) => L.marker(latlng, { icon: getIcon(f.properties.NAMA) })
+        });
+
+        function updateVisibility() {
+            var z = map.getZoom();
+            if (z >= 15) { 
+                if (!map.hasLayer(layerJalan)) map.addLayer(layerJalan);
+                if (!map.hasLayer(layerFasum)) map.addLayer(layerFasum);
+            } else { 
+                if (map.hasLayer(layerJalan)) map.removeLayer(layerJalan);
+                if (map.hasLayer(layerFasum)) map.removeLayer(layerFasum);
+            }
+        }
+        map.on('zoomend', updateVisibility);
+        updateVisibility();
+
+        function centerMap() { map.fitBounds(layerBatasDesa.getBounds(), { padding: [50, 50] }); }
+        window.onload = centerMap;
+
+        map.addControl(new L.Control.Search({ layer: layerFasum, propertyName: 'NAMA', initial: false, hideMarkerOnCollapse: true }));
+        var measureControl = new L.Control.Measure({ position: 'topleft', primaryLengthUnit: 'meters' });
+        measureControl.addTo(map);
+        document.querySelector('.leaflet-control-measure-toggle').innerHTML = '<i class="fas fa-ruler"></i>';
+
+        var overlaysTree = { 
+            label: '<b>Katalog Desa Teluk</b>', 
+            selectAllCheckbox: true,
+            children: [ 
+                {label: '🚩 Batas Desa (Aktif)', layer: layerBatasDesa},
+                {label: '🛣️ Jalan Desa', layer: layerJalan},
+                {label: '🏛️ Fasilitas & Balai Desa', layer: layerFasum}
+            ] 
+        };
+        L.control.layers.tree(null, overlaysTree, { collapsed: false }).addTo(map);
+
+        document.getElementById('mobile-menu-btn').onclick = () => document.getElementById('mobile-menu').classList.toggle('hidden');
+        document.getElementById('desa-dropdown-btn').onclick = (e) => {
+             e.stopPropagation(); document.getElementById('desa-dropdown-menu').classList.toggle('show');
+        };
+        document.onclick = () => document.getElementById('desa-dropdown-menu').classList.remove('show');
+    </script>
+</body>
+</html>

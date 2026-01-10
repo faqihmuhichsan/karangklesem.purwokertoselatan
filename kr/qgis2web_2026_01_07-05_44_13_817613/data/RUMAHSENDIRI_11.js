@@ -1,1 +1,0 @@
-var json_RUMAHSENDIRI_11 = {"type":"FeatureCollection","name":"RUMAHSENDIRI_11","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"NAMA":"Rumah Faqih"},"geometry":{"type":"Point","coordinates":[109.237254196148967,-7.457959627233128]}}]}

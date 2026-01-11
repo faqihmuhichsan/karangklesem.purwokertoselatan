@@ -20,9 +20,10 @@
         body { font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; height: 100vh; }
         header { z-index: 1000; position: relative; }
         
-        /* PERBAIKAN: Menghapus -75px agar peta full ke bawah (100vh - tinggi header 64px) */
+        /* Map memenuhi layar dikurangi tinggi header (64px) */
         #map { width: 100%; height: calc(100vh - 64px); position: relative; z-index: 1; background: #f8fafc; }
         
+        /* Animasi garis bawah menu desktop */
         .nav-link { position: relative; overflow: hidden; }
         .nav-link::before {
             content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
@@ -31,6 +32,7 @@
         }
         .nav-link:hover::before { transform: scaleX(1); transform-origin: left; }
 
+        /* Styling Label Fasilitas */
         .custom-label {
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid #1e3a8a; border-radius: 4px;
@@ -38,6 +40,7 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.15); white-space: nowrap;
         }
 
+        /* Styling Label Nama Desa Besar */
         .label-nama-desa-utama {
             background: transparent !important; border: none !important; box-shadow: none !important;
             color: #656565 !important; font-size: 16px !important; font-weight: 900 !important;
@@ -46,18 +49,19 @@
             white-space: nowrap; letter-spacing: 1px; pointer-events: none;
         }
         
-        /* --- EFEK HIGHLIGHT IKON --- */
+        /* Efek Ikon Marker */
         .custom-div-icon i { 
             filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.4)); 
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .custom-div-icon:hover i { 
             transform: scale(1.5) translateY(-5px); 
-            color: #fbbf24 !important; /* Berubah jadi Emas */
+            color: #fbbf24 !important;
             filter: drop-shadow(0 10px 5px rgba(0,0,0,0.3));
             cursor: pointer;
         }
 
+        /* Fix ikon penggaris */
         .leaflet-control-measure-toggle { background-image: none !important; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
@@ -76,6 +80,7 @@
                 <div class="hidden md:flex space-x-2 items-center">
                     <a href="../../index.html" class="nav-link px-3 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition">Beranda</a>
                     <a href="../../purwokerto selatan/index.html" class="nav-link px-3 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition">Peta Kecamatan</a>
+                    
                     <div class="relative group" tabindex="0">
                         <button id="desa-dropdown-btn" class="nav-link px-4 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition flex items-center">
                             Peta Desa <i class="fas fa-chevron-down ml-2 text-[10px]"></i>
@@ -87,23 +92,34 @@
                             <a href="../teluk/teluk.html" class="block px-4 py-2 text-sm hover:bg-indigo-50 transition-colors"><i class="fas fa-map-marker-alt text-indigo-500 mr-2"></i>Teluk</a>
                         </div>
                     </div>
+                    
                     <a href="../../index.html#about" class="nav-link px-3 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition">Tentang</a>
                 </div>
+
                 <button id="mobile-menu-btn" class="md:hidden p-2"><i class="fas fa-bars text-xl"></i></button>
             </div>
             
             <div id="mobile-menu" class="hidden md:hidden pb-4 bg-indigo-900 absolute left-0 right-0 px-4 shadow-xl border-t border-indigo-800">
-                <a href="../../index.html" class="block py-3 border-b border-white/5">Beranda</a>
-                <a href="../../purwokerto selatan/index.html" class="block py-3 border-b border-white/5">Peta Kecamatan</a>
-                <a href="berkoh.html" class="block py-2 font-bold text-yellow-400"><i class="fas fa-map-marker-alt mr-2"></i>Peta Desa Berkoh</a>
-                <a href="../karangklesem/karangklesem.html" class="block py-2"><i class="fas fa-map-marker-alt mr-2 text-yellow-400"></i>Peta Desa Karangklesem</a>
-                <a href="../karangpucung/karangpucung.html" class="block py-2"><i class="fas fa-map-marker-alt mr-2 text-yellow-400"></i>Peta Desa Karangpucung</a>
-                <a href="../teluk/teluk.html" class="block py-2"><i class="fas fa-map-marker-alt mr-2 text-yellow-400"></i>Peta Desa Teluk</a>
+                <a href="../../index.html" class="block py-3 border-b border-white/10 font-medium">Beranda</a>
+                <a href="../../purwokerto selatan/index.html" class="block py-3 border-b border-white/10 font-medium">Peta Kecamatan</a>
+                
+                <div class="py-2 space-y-1">
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-bold mt-2 mb-1">Pilih Desa:</p>
+                    <a href="berkoh.html" class="block py-2 font-bold text-yellow-400 pl-3 border-l-2 border-yellow-400 bg-white/5 rounded-r"><i class="fas fa-map-marker-alt mr-2"></i>Desa Berkoh</a>
+                    <a href="../karangklesem/karangklesem.html" class="block py-2 pl-3 border-l-2 border-transparent hover:border-slate-400 hover:bg-white/5 transition"><i class="fas fa-map-marker-alt mr-2 text-slate-400"></i>Desa Karangklesem</a>
+                    <a href="../karangpucung/karangpucung.html" class="block py-2 pl-3 border-l-2 border-transparent hover:border-slate-400 hover:bg-white/5 transition"><i class="fas fa-map-marker-alt mr-2 text-slate-400"></i>Desa Karangpucung</a>
+                    <a href="../teluk/teluk.html" class="block py-2 pl-3 border-l-2 border-transparent hover:border-slate-400 hover:bg-white/5 transition"><i class="fas fa-map-marker-alt mr-2 text-slate-400"></i>Desa Teluk</a>
+                </div>
+
+                <a href="../../index.html#about" class="block py-3 border-t border-white/10 font-medium hover:text-yellow-300 transition-colors mt-1">
+                    <i></i>Tentang
+                </a>
             </div>
         </nav>
     </header>
 
     <main><div id="map"></div></main>
+    
     <div id="map-title-popup" class="fixed top-20 left-1/2 transform -translate-x-1/2 bg-white border-l-4 border-indigo-900 text-slate-800 rounded px-3 py-2 shadow-md z-50">
             <strong class="text-xs font-bold tracking-wide">DESA BERKOH</strong>
     </div>
@@ -120,12 +136,20 @@
     <script src="data/BALAIDESABERKOH_3.js"></script>
 
     <script>
+        // Inisialisasi Peta
         var map = L.map('map', { zoomControl: true, maxZoom: 22, minZoom: 3 });
-        L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxNativeZoom: 19, maxZoom: 22 }).addTo(map);
+        
+        // Base Map Google Road
+        L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { 
+            maxNativeZoom: 19, 
+            maxZoom: 22 
+        }).addTo(map);
 
+        // Fungsi Menentukan Ikon Berdasarkan Nama
         function getIcon(name) {
             let iconClass = "fa-map-marker-alt", color = "#ef4444";
             const n = (name || "").toLowerCase();
+            
             if (n.includes('balai desa') || n.includes('kantor')) { iconClass = "fa-landmark"; color = "#1e40af"; }
             else if (n.includes('masjid') || n.includes('mushola')) { iconClass = "fa-mosque"; color = "#15803d"; }
             else if (n.includes('sekolah') || n.includes('sd') || n.includes('kampus')) { iconClass = "fa-graduation-cap"; color = "#a16207"; }
@@ -138,12 +162,12 @@
             });
         }
 
-        // --- LAYER BATAS DESA (Highlight & Label) ---
+        // --- LAYER 1: BATAS DESA (Highlight & Label) ---
         var layerBatasDesa = L.geoJson(json_BATASWILAYAH_1, { 
             style: { color: '#656565', weight: 4, dashArray: '', fillColor: '#9ca3af', fillOpacity: 0.05 },
             onEachFeature: function(feature, layer) {
                 layer.bindTooltip("DESA BERKOH", { permanent: true, direction: 'center', className: 'label-nama-desa-utama' });
-                // HIGHLIGHT EVENT
+                // Event Highlight
                 layer.on({
                     mouseover: function(e) { 
                         e.target.setStyle({ weight: 5, color: '#fbbf24', fillOpacity: 0.2 }); 
@@ -155,11 +179,10 @@
             }
         }).addTo(map);
 
-        // --- LAYER JALAN (Highlight Hover) ---
+        // --- LAYER 2: JALAN (Highlight Hover) ---
         var layerJalan = L.geoJson(json_JALANBERKOH_2, { 
             style: { color: '#ef4444', weight: 2.5, opacity: 0.8 },
             onEachFeature: function(feature, layer) {
-                // HIGHLIGHT JALAN
                 layer.on({
                     mouseover: function(e) { e.target.setStyle({ color: '#06b6d4', weight: 5, opacity: 1 }); },
                     mouseout: function(e) { layerJalan.resetStyle(e.target); },
@@ -168,7 +191,7 @@
             }
         });
 
-        // --- LAYER BALAI DESA & FASUM ---
+        // --- LAYER 3: FASILITAS UMUM ---
         var layerFasum = L.geoJson(json_BALAIDESABERKOH_3, {
             onEachFeature: (f, layer) => { 
                 const n = f.properties.NAMA || "Lokasi"; 
@@ -178,7 +201,7 @@
             pointToLayer: (f, latlng) => L.marker(latlng, { icon: getIcon(f.properties.NAMA) })
         });
 
-        // --- VISIBILITY ZOOM CONTROL ---
+        // --- KONTROL ZOOM (Visibility Layers) ---
         function updateVisibility() {
             var z = map.getZoom();
             if (z >= 15) { 
@@ -192,14 +215,22 @@
         map.on('zoomend', updateVisibility);
         updateVisibility();
 
+        // Center Map saat load
         function centerMap() { map.fitBounds(layerBatasDesa.getBounds(), { padding: [50, 50] }); }
         window.onload = centerMap;
 
+        // --- TAMBAHAN KONTROL PETA ---
+        
+        // 1. Search Bar
         map.addControl(new L.Control.Search({ layer: layerFasum, propertyName: 'NAMA', initial: false, hideMarkerOnCollapse: true }));
+        
+        // 2. Measure (Penggaris)
         var measureControl = new L.Control.Measure({ position: 'topleft', primaryLengthUnit: 'meters' });
         measureControl.addTo(map);
+        // Ganti ikon measure bawaan dengan font awesome
         document.getElementsByClassName('leaflet-control-measure-toggle')[0].innerHTML = '<i class="fas fa-ruler"></i>';
 
+        // 3. Layer Control Tree
         var overlaysTree = { 
             label: '<b>Katalog Desa Berkoh</b>', 
             selectAllCheckbox: true,
@@ -211,11 +242,34 @@
         };
         L.control.layers.tree(null, overlaysTree, { collapsed: false }).addTo(map);
 
-        document.getElementById('mobile-menu-btn').onclick = () => document.getElementById('mobile-menu').classList.toggle('hidden');
-        document.getElementById('desa-dropdown-btn').onclick = (e) => {
-             e.stopPropagation(); document.getElementById('desa-dropdown-menu').classList.toggle('show');
+        // --- LOGIKA TOGGLE MENU MOBILE ---
+        document.getElementById('mobile-menu-btn').onclick = () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
         };
-        document.onclick = () => document.getElementById('desa-dropdown-menu').classList.remove('show');
+
+        // --- LOGIKA DROPDOWN DESA (Desktop) ---
+        const dropdownBtn = document.getElementById('desa-dropdown-btn');
+        const dropdownMenu = document.getElementById('desa-dropdown-menu');
+
+        // Toggle dropdown saat klik tombol
+        dropdownBtn.onclick = (e) => {
+            e.stopPropagation(); // Mencegah event bubbling ke document
+            // Toggle class opacity/pointer-events untuk animasi
+            if (dropdownMenu.classList.contains('opacity-0')) {
+                dropdownMenu.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                dropdownMenu.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+            } else {
+                dropdownMenu.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+                dropdownMenu.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+            }
+        };
+
+        // Tutup dropdown jika klik di luar
+        document.onclick = () => {
+            dropdownMenu.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+            dropdownMenu.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+        };
     </script>
 </body>
 </html>

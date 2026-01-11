@@ -6,16 +6,33 @@
     <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
     <title>Peta Purwokerto Selatan</title>
     <link rel="icon" href="../images/Lambang Banyumas Asli.png" type="image/png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <link rel="stylesheet" href="css/leaflet.css">
     <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
     <link rel="stylesheet" href="css/qgis2web.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/leaflet-measure.css">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; height: 100vh; margin: 0; overflow: hidden; }
-        #map { width: 100%; height: calc(100vh - 64px - 75px); background: #f0f0f0; }
+        body { font-family: 'Inter', sans-serif; height: 100vh; margin: 0; overflow: hidden; background: #f0f0f0; }
+        
+        /* HEADER (Fixed Top) */
+        header { position: fixed; top: 0; left: 0; right: 0; height: 64px; z-index: 2000; }
+
+        /* MAP CONTAINER (Full Screen dikurangi Header) */
+        #map { 
+            position: absolute; 
+            top: 64px; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            width: 100%; 
+            height: calc(100vh - 64px); 
+            z-index: 1; 
+        }
         
         /* Label Nama Desa */
         .label-desa {
@@ -62,17 +79,18 @@
     </style>
 </head>
 <body class="bg-slate-50">
-    <header id="main-header" class="bg-indigo-900 text-white shadow-lg h-16 z-[1000] relative">
+    
+    <header id="main-header" class="bg-indigo-900 text-white shadow-lg">
         <nav class="max-w-7xl mx-auto px-4 h-full flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <a href="../index.html" class="flex items-center gap-3">
+                <a href="../index.html" target="_top" class="flex items-center gap-3">
                     <img src="../images/Lambang Banyumas Asli.png" alt="Logo" class="w-10 h-10 bg-white rounded-full p-1">
                     <span class="font-bold hidden sm:inline">Purwokerto Selatan</span>
                 </a>
             </div>
             
             <div class="hidden md:flex items-center space-x-6">
-                <a href="../index.html" class="nav-link text-sm font-medium">Beranda</a>
+                <a href="../index.html" target="_top" class="nav-link text-sm font-medium">Beranda</a>
                 <div class="relative group">
                     <button class="nav-link text-sm font-medium flex items-center gap-1">
                         Peta Desa <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
@@ -84,7 +102,7 @@
                         <a href="../desa/teluk/teluk.html" class="block px-4 py-2 hover:bg-indigo-50"><i class="fas fa-map-marker-alt text-indigo-500 mr-2"></i>Teluk</a>
                     </div>
                 </div>
-                <a href="../index.html#about" class="nav-link text-sm font-medium">Tentang</a>
+                <a href="../index.html#about" target="_top" class="nav-link text-sm font-medium">Tentang</a>
             </div>
 
             <button id="mobile-menu-btn" class="md:hidden p-2">
@@ -93,29 +111,20 @@
         </nav>
 
         <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full bg-indigo-900 border-t border-indigo-800 p-4 space-y-3 shadow-xl md:hidden">
-            <a href="../index.html" class="block text-sm hover:bg-indigo-800 p-2 rounded">Beranda</a>
+            <a href="../index.html" target="_top" class="block text-sm hover:bg-indigo-800 p-2 rounded">Beranda</a>
             <a href="../desa/berkoh/berkoh.html" class="block text-sm hover:bg-indigo-800 p-2 rounded"><i class="fas fa-map-marker-alt mr-2 text-yellow-400"></i>Berkoh</a>
             <a href="../desa/karangklesem/karangklesem.html" class="block text-sm hover:bg-indigo-800 p-2 rounded"><i class="fas fa-map-marker-alt mr-2 text-yellow-400"></i>Karangklesem</a>
             <a href="../desa/karangpucung/karangpucung.html" class="block text-sm hover:bg-indigo-800 p-2 rounded"><i class="fas fa-map-marker-alt mr-2 text-yellow-400"></i>Karangpucung</a>
             <a href="../desa/teluk/teluk.html" class="block text-sm hover:bg-indigo-800 p-2 rounded"><i class="fas fa-map-marker-alt mr-2 text-yellow-400"></i>Teluk</a>
-            <a href="../index.html#about" class="block text-sm hover:bg-indigo-800 p-2 rounded">Tentang</a>
+            <a href="../index.html#about" target="_top" class="block text-sm hover:bg-indigo-800 p-2 rounded">Tentang</a>
         </div>
     </header>
 
     <div id="map"></div>
 
-    <footer style="position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px 20px; border-top: 2px solid #e5e7eb; z-index: 1000;">
-        <div class="max-w-7xl mx-auto flex justify-between items-center gap-4">
-            <div>
-                <h3 class="text-base font-bold text-slate-800 m-0">Kecamatan Purwokerto Selatan</h3>
-                <p class="text-[11px] text-slate-500 mt-1">Status: Mode Tinjauan Administratif & Infrastruktur</p>
-            </div>
-            <div class="flex items-center gap-3">
-                <button onclick="centerMap()" class="bg-yellow-500 text-white px-3 py-2 rounded-lg text-xs font-bold transition hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-400">Fokus</button>
-                <a href="../index.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-xs font-bold transition hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-400">← Kembali</a>
-            </div>
-        </div>
-    </footer>
+    <div id="map-title-popup" class="fixed top-20 left-1/2 transform -translate-x-1/2 bg-white border-l-4 border-indigo-900 text-slate-800 rounded px-3 py-2 shadow-md z-[1500]">
+        <strong class="text-xs font-bold tracking-wide">KECAMATAN PURWOKERTO SELATAN</strong>
+    </div>
 
     <script src="js/qgis2web_expressions.js"></script>
     <script src="js/leaflet.js"></script>
@@ -134,15 +143,29 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const headers = document.querySelectorAll('header');
-            if (headers.length > 1) { for (let i = 1; i < headers.length; i++) headers[i].remove(); }
+            // DETEKSI IFRAME
             if (window.self !== window.top) {
-                document.getElementById('main-header').style.display = 'none';
-                document.getElementById('map').style.height = '100vh';
+                const header = document.getElementById('main-header');
+                if (header) header.style.display = 'none';
+
+                const mapDiv = document.getElementById('map');
+                if (mapDiv) {
+                    mapDiv.style.top = '0';
+                    mapDiv.style.height = '100vh';
+                }
             }
         });
 
-        var map = L.map('map', { zoomControl: true, maxZoom: 18, minZoom: 5, attributionControl: false });
+        // 1. INISIALISASI PETA DENGAN KOORDINAT DEFAULT
+        // PERBAIKAN: set zoomControl ke false untuk menghilangkan tombol default (yang bikin dobel)
+        var map = L.map('map', { 
+            zoomControl: false, 
+            maxZoom: 18, 
+            minZoom: 5, 
+            attributionControl: false 
+        }).setView([-7.4407, 109.2439], 13); 
+
+        // Tambahkan Zoom Control Manual (Agar posisinya sesuai keinginan dan cuma satu)
         L.control.zoom({ position: 'topleft' }).addTo(map);
 
         map.createPane('pane_GoogleMaps_0');
@@ -176,7 +199,7 @@
             });
         }
 
-        // --- STYLING WILAYAH (TRANSPARAN DI AWAL) ---
+        // --- STYLING WILAYAH ---
         function style_Wilayah(feature) {
             return {
                 pane: 'pane_WILAYAHPURWOKERTOSELATAN_2',
@@ -189,141 +212,116 @@
         }
 
         // --- LAYER NAMA DESA ---
-        var layer_LabelDesa = new L.geoJson(json_WILAYAHPURWOKERTOSELATAN_2, {
-            interactive: false, 
-            pointToLayer: function(f, l) { return L.circleMarker(l, { radius: 0, opacity:0, fillOpacity:0 }); },
-            onEachFeature: function(f, layer) {
-                layer.bindTooltip(f.properties['NAME_4'], {
-                    permanent: true, direction: 'center', className: 'label-desa', interactive: false
-                });
-            }
-        }).addTo(map);
-
-        // --- LAYER WILAYAH (POLYGON) ---
-        map.createPane('pane_WILAYAHPURWOKERTOSELATAN_2');
-        map.getPane('pane_WILAYAHPURWOKERTOSELATAN_2').style.zIndex = 401;
-        var layer_WILAYAHPURWOKERTOSELATAN_2 = new L.geoJson(json_WILAYAHPURWOKERTOSELATAN_2, {
-            pane: 'pane_WILAYAHPURWOKERTOSELATAN_2',
-            style: style_Wilayah,
-            onEachFeature: function(feature, layer) {
-                layer.on({
-                    mouseover: function(e) {
-                        var l = e.target;
-                        l.setStyle({ 
-                            weight: 5,            
-                            color: '#fbbf24',     
-                            opacity: 1,           
-                            fillColor: '#fbbf24',
-                            fillOpacity: 0.2      
-                        });
-                        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-                            l.bringToFront();
-                        }
-                    },
-                    mouseout: function(e) {
-                        layer_WILAYAHPURWOKERTOSELATAN_2.resetStyle(e.target);
-                    },
-                    click: function(e) {
-                        map.fitBounds(e.target.getBounds());
-                        if(map.getZoom() > 16) map.setZoom(16);
-                    }
-                });
-            }
-        }).addTo(map);
-
-        // --- LAYER JALAN ---
-        map.createPane('pane_JALAN_4');
-        map.getPane('pane_JALAN_4').style.zIndex = 402;
-        var layer_JALAN_4 = new L.geoJson(json_JALAN_4, {
-            pane: 'pane_JALAN_4',
-            style: { color: '#ef4444', weight: 2, opacity: 0.7 },
-            onEachFeature: function(feature, layer) {
-                layer.on({
-                    mouseover: function(e) {
-                        var l = e.target;
-                        l.setStyle({ color: '#06b6d4', weight: 6, opacity: 1 });
-                        l.bringToFront();
-                    },
-                    mouseout: function(e) {
-                        var l = e.target;
-                        l.setStyle({ color: '#ef4444', weight: 2, opacity: 0.7 });
-                    },
-                    click: function(e) {
-                        if (feature.properties['name']) {
-                            layer.bindPopup("<b>" + feature.properties['name'] + "</b>").openPopup();
-                        }
-                    }
-                });
-            }
-        });
-
-        // --- LAYER BALAI DESA ---
-        map.createPane('pane_BALAIDESA_3');
-        map.getPane('pane_BALAIDESA_3').style.zIndex = 405; 
-        
-        var iconBalai = L.divIcon({
-            html: '<i class="fas fa-landmark" style="color: #1e40af; font-size: 18px; filter: drop-shadow(2px 2px 2px rgba(255,255,255,0.8));"></i>',
-            className: 'custom-div-icon', iconSize: [20, 20], iconAnchor: [10, 10]
-        });
-
-        var layer_BALAIDESA_3 = new L.geoJson(json_BALAIDESA_3, {
-            pane: 'pane_BALAIDESA_3',
-            pointToLayer: function (feature, latlng) {
-                return L.marker(latlng, { icon: iconBalai });
-            },
-            onEachFeature: function (feature, layer) {
-                if (feature.properties['NAMA']) {
-                    layer.bindTooltip(feature.properties['NAMA'], {
-                        permanent: true, 
-                        direction: 'top', 
-                        offset: [0, -15],
-                        className: 'label-balai'
+        if (typeof json_WILAYAHPURWOKERTOSELATAN_2 !== 'undefined') {
+            var layer_LabelDesa = new L.geoJson(json_WILAYAHPURWOKERTOSELATAN_2, {
+                interactive: false, 
+                pointToLayer: function(f, l) { return L.circleMarker(l, { radius: 0, opacity:0, fillOpacity:0 }); },
+                onEachFeature: function(f, layer) {
+                    layer.bindTooltip(f.properties['NAME_4'], {
+                        permanent: true, direction: 'center', className: 'label-desa', interactive: false
                     });
                 }
-            }
-        });
+            }).addTo(map);
 
-        // --- VISIBILITY ---
-        function updateLayerVisibility() {
-            var z = map.getZoom();
+            // --- LAYER WILAYAH (POLYGON) ---
+            map.createPane('pane_WILAYAHPURWOKERTOSELATAN_2');
+            map.getPane('pane_WILAYAHPURWOKERTOSELATAN_2').style.zIndex = 401;
+            var layer_WILAYAHPURWOKERTOSELATAN_2 = new L.geoJson(json_WILAYAHPURWOKERTOSELATAN_2, {
+                pane: 'pane_WILAYAHPURWOKERTOSELATAN_2',
+                style: style_Wilayah,
+                onEachFeature: function(feature, layer) {
+                    layer.on({
+                        mouseover: function(e) {
+                            var l = e.target;
+                            l.setStyle({ 
+                                weight: 5,            
+                                color: '#fbbf24',     
+                                opacity: 1,           
+                                fillColor: '#fbbf24',
+                                fillOpacity: 0.2      
+                            });
+                            if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                                l.bringToFront();
+                            }
+                        },
+                        mouseout: function(e) {
+                            layer_WILAYAHPURWOKERTOSELATAN_2.resetStyle(e.target);
+                        },
+                        click: function(e) {
+                            map.fitBounds(e.target.getBounds());
+                            if(map.getZoom() > 16) map.setZoom(16);
+                        }
+                    });
+                }
+            }).addTo(map);
+        }
+
+        // --- LAYER JALAN ---
+        var layer_JALAN_4;
+        if (typeof json_JALAN_4 !== 'undefined') {
+            map.createPane('pane_JALAN_4');
+            map.getPane('pane_JALAN_4').style.zIndex = 402;
+            layer_JALAN_4 = new L.geoJson(json_JALAN_4, {
+                pane: 'pane_JALAN_4',
+                style: { color: '#ef4444', weight: 2, opacity: 0.7 },
+                onEachFeature: function(feature, layer) {
+                    layer.on({
+                        mouseover: function(e) {
+                            var l = e.target;
+                            l.setStyle({ color: '#06b6d4', weight: 6, opacity: 1 });
+                            l.bringToFront();
+                        },
+                        mouseout: function(e) {
+                            var l = e.target;
+                            l.setStyle({ color: '#ef4444', weight: 2, opacity: 0.7 });
+                        },
+                        click: function(e) {
+                            if (feature.properties['name']) {
+                                layer.bindPopup("<b>" + feature.properties['name'] + "</b>").openPopup();
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        // --- LAYER BALAI DESA ---
+        var layer_BALAIDESA_3;
+        if (typeof json_BALAIDESA_3 !== 'undefined') {
+            map.createPane('pane_BALAIDESA_3');
+            map.getPane('pane_BALAIDESA_3').style.zIndex = 405; 
             
-            if (!map.hasLayer(layer_LabelDesa)) map.addLayer(layer_LabelDesa);
+            var iconBalai = L.divIcon({
+                html: '<i class="fas fa-landmark" style="color: #1e40af; font-size: 18px; filter: drop-shadow(2px 2px 2px rgba(255,255,255,0.8));"></i>',
+                className: 'custom-div-icon', iconSize: [20, 20], iconAnchor: [10, 10]
+            });
 
-            if (z >= 15) {
-                if (!map.hasLayer(layer_JALAN_4)) map.addLayer(layer_JALAN_4);
-                if (!map.hasLayer(layer_BALAIDESA_3)) map.addLayer(layer_BALAIDESA_3);
-            } else {
-                if (map.hasLayer(layer_JALAN_4)) map.removeLayer(layer_JALAN_4);
-                if (map.hasLayer(layer_BALAIDESA_3)) map.removeLayer(layer_BALAIDESA_3);
-            }
+            layer_BALAIDESA_3 = new L.geoJson(json_BALAIDESA_3, {
+                pane: 'pane_BALAIDESA_3',
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, { icon: iconBalai });
+                },
+                onEachFeature: function (feature, layer) {
+                    if (feature.properties['NAMA']) {
+                        layer.bindTooltip(feature.properties['NAMA'], {
+                            permanent: true, 
+                            direction: 'top', 
+                            offset: [0, -15],
+                            className: 'label-balai'
+                        });
+                    }
+                }
+            });
         }
 
-        var coordDisplay = L.control({ position: 'bottomright' });
-        coordDisplay.onAdd = function() {
-            var div = L.DomUtil.create('div', 'bg-white px-3 py-2 rounded shadow text-xs font-mono border border-gray-300');
-            div.id = 'coord-info';
-            div.innerHTML = 'Lat: -, Lng: -';
-            return div;
-        };
-        coordDisplay.addTo(map);
-
-        map.on('mousemove', function(e) {
-            document.getElementById('coord-info').innerHTML = 'Lat: ' + e.latlng.lat.toFixed(5) + ', Lng: ' + e.latlng.lng.toFixed(5);
-        });
-
-        map.on('zoomend', updateLayerVisibility);
-
-        function centerMap() {
-            var bounds = layer_WILAYAHPURWOKERTOSELATAN_2.getBounds();
-            if(bounds.isValid()){
-                map.fitBounds(bounds, { padding: [30, 30] });
-                if (map.getZoom() > 14) map.setZoom(14);
-            }
-            updateLayerVisibility();
-        }
-
+        // --- ZOOM KE WILAYAH (Jika data ada) ---
         setTimeout(function() {
-            centerMap();
+            if (typeof layer_WILAYAHPURWOKERTOSELATAN_2 !== 'undefined') {
+                var bounds = layer_WILAYAHPURWOKERTOSELATAN_2.getBounds();
+                if(bounds.isValid()){
+                    map.fitBounds(bounds, { padding: [30, 30] });
+                }
+            }
         }, 500);
 
         document.getElementById('mobile-menu-btn').onclick = function() {
@@ -334,16 +332,23 @@
         measureControl.addTo(map);
         document.getElementsByClassName('leaflet-control-measure-toggle')[0].innerHTML = '<i class="fas fa-ruler"></i>';
 
-        // --- KATALOG LAYER (DITAMBAHKAN SESUAI REQUEST) ---
+        // --- KATALOG LAYER ---
         var overlaysTree = { 
             label: '<b>Katalog Purwokerto Selatan</b>', 
             selectAllCheckbox: true,
-            children: [ 
-                {label: '🚩 Batas Wilayah (Aktif)', layer: layer_WILAYAHPURWOKERTOSELATAN_2},
-                {label: '🛣️ Jalan Kecamatan', layer: layer_JALAN_4},
-                {label: '🏛️ Balai Desa', layer: layer_BALAIDESA_3}
-            ] 
+            children: [] 
         };
+
+        if (typeof layer_WILAYAHPURWOKERTOSELATAN_2 !== 'undefined') {
+            overlaysTree.children.push({label: '🚩 Batas Wilayah (Aktif)', layer: layer_WILAYAHPURWOKERTOSELATAN_2});
+        }
+        if (typeof layer_JALAN_4 !== 'undefined') {
+            overlaysTree.children.push({label: '🛣️ Jalan Kecamatan', layer: layer_JALAN_4});
+        }
+        if (typeof layer_BALAIDESA_3 !== 'undefined') {
+            overlaysTree.children.push({label: '🏛️ Balai Desa', layer: layer_BALAIDESA_3});
+        }
+
         L.control.layers.tree(null, overlaysTree, { collapsed: false }).addTo(map);
 
     </script>

@@ -17,9 +17,11 @@
     <link rel="stylesheet" href="css/leaflet-search.css">
 
     <style>
-        body { font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; height: 100%; }
+        body { font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; height: 100vh; }
         header { z-index: 1000; position: relative; }
-        #map { width: 100%; height: calc(100vh - 64px - 75px); position: relative; z-index: 1; background: #f8fafc; }
+        
+        /* PERBAIKAN: Menghapus -75px agar peta full ke bawah (100vh - tinggi header 64px) */
+        #map { width: 100%; height: calc(100vh - 64px); position: relative; z-index: 1; background: #f8fafc; }
         
         .nav-link { position: relative; overflow: hidden; }
         .nav-link::before {
@@ -63,7 +65,6 @@
                     <img src="../../images/Lambang Banyumas Asli.png" alt="Logo" class="relative w-10 h-10 rounded-full bg-white p-1 transition-transform group-hover:rotate-12">
                     <div>
                         <span class="font-bold hidden sm:block text-base">Purwokerto Selatan</span>
-                        <p class="text-[10px] text-yellow-400 font-medium uppercase tracking-tighter sm:block hidden">Desa Karangklesem</p>
                     </div>
                 </div>
                 
@@ -86,6 +87,19 @@
                 <button id="mobile-menu-btn" class="md:hidden p-2"><i class="fas fa-bars text-xl"></i></button>
             </div>
         </nav>
+
+        <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-indigo-900 border-t border-indigo-800 p-4 space-y-3 shadow-xl">
+            <a href="../../index.html" class="block text-sm hover:bg-indigo-800 p-2 rounded">Beranda</a>
+            <a href="../../purwokerto selatan/index.html" class="block text-sm hover:bg-indigo-800 p-2 rounded">Peta Kecamatan</a>
+            <div class="border-t border-indigo-700 pt-2 mt-2">
+                <p class="text-xs text-indigo-300 font-bold mb-2 uppercase px-2">Peta Desa</p>
+                <a href="../berkoh/berkoh.html" class="block text-sm hover:bg-indigo-800 p-2 rounded ml-2"><i class="fas fa-map-marker-alt mr-2"></i>Berkoh</a>
+                <a href="karangklesem.html" class="block text-sm bg-indigo-800 p-2 rounded ml-2 font-bold"><i class="fas fa-map-marker-alt mr-2"></i>Karangklesem</a>
+                <a href="../karangpucung/karangpucung.html" class="block text-sm hover:bg-indigo-800 p-2 rounded ml-2"><i class="fas fa-map-marker-alt mr-2"></i>Karangpucung</a>
+                <a href="../teluk/teluk.html" class="block text-sm hover:bg-indigo-800 p-2 rounded ml-2"><i class="fas fa-map-marker-alt mr-2"></i>Teluk</a>
+            </div>
+            <a href="../../index.html#about" class="block text-sm hover:bg-indigo-800 p-2 rounded border-t border-indigo-700 mt-2">Tentang</a>
+        </div>
     </header>
 
     <main><div id="map"></div></main>
@@ -93,19 +107,6 @@
     <div id="map-title-popup" class="fixed top-20 left-1/2 transform -translate-x-1/2 bg-white border-l-4 border-indigo-900 text-slate-800 rounded px-3 py-2 shadow-md z-50">
             <strong class="text-xs font-bold tracking-wide">DESA KARANGKLESEM</strong>
     </div>
-
-    <footer style="position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px 20px; border-top: 2px solid #e5e7eb; z-index: 1000;">
-        <div class="max-w-7xl mx-auto flex justify-between items-center gap-4">
-            <div>
-                <h3 class="text-base font-bold text-slate-800 m-0">Kelurahan Karangklesem</h3>
-                <p class="text-[11px] text-slate-500 mt-1">Status: Filter Visibilitas Fasilitas Umum Terpasang</p>
-            </div>
-            <div class="flex items-center gap-3">
-                <button onclick="centerMap()" class="bg-yellow-500 text-white px-3 py-2 rounded-lg text-xs font-bold transition hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-400">Fokus</button>
-                <a href="../../index.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-xs font-bold transition hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-400">← Kembali</a>
-            </div>
-        </div>
-    </footer>
 
     <script src="js/qgis2web_expressions.js"></script>
     <script src="js/leaflet.js"></script>
